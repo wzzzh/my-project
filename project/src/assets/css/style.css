@@ -1,0 +1,218 @@
+/*aside修改样式*/
+.dropdown-menu{
+	display:inherit;
+}
+ul,li{
+	list-style: none;
+}
+.sidebar-menu .main-menu ul li.menu-header{
+	border-left: 0;
+	display: block;
+	text-align: center;
+	font-size: 16px;
+}
+.sidebar-menu .main-menu ul li .submenu li a .submenu-label{
+	padding-left:40px;
+}
+.design{
+	padding:20px 20px;
+}
+label{
+	width: 100px;
+	padding-top:7px;
+	padding-right: 10px;
+	text-align: right;
+	float: left;
+}
+.form-control{
+	width: 80%;
+	float: left;
+}
+#inputSuccess2{
+	width:50%;
+}
+#btn-chat1{
+	width:80px;
+	height: 34px;
+	margin-left: 20px;
+	font-size:14px;
+}
+.smart-widget.widget-dark-blue .smart-widget-header{
+	margin-bottom: 15px;
+}
+.btn.btn-success{
+	width:200px;
+	height: 50px;
+	margin-left: 30%;
+	font-size:18px;
+}
+.sidebar-menu .main-menu ul li a .submenu-icon:before{
+	content: '';
+}
+.iconfont {
+	line-height: 16px;
+}
+/*图表*/
+#chart1,#chart2{
+	border: 1px solid #e6e6e6;
+	border-radius: 3px;
+	margin-bottom: 20px;
+	border-color: #e4e4e4;
+	border-top-width: 4px;
+	background-color: #fff;
+	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
+}
+
+/*home_tab*/
+.tab_addCon{
+	margin-bottom:10px;
+}
+#add_but,#homTab_btn,#checkAll,#delAll{
+	width: 80px;
+	height: 40px;
+	margin-left: 0;
+	font-size:14px;
+}
+.table>tbody>tr>td,.table>thead>tr>th{
+	font-family: "微软雅黑";
+	vertical-align: middle;
+	text-align: center;
+}
+.button{
+	padding: 10px 15px;
+}
+.button-group{
+	width: 150px;
+	height: 40px;
+	line-height: 40px;
+	vertical-align: middle;
+	text-align: center;
+	margin:0 auto;
+}
+.border-edit{
+	border:1px #2baab1 solid;
+	border-radius: 5px;
+	border-bottom-right-radius: 0px;
+  border-top-right-radius: 0px;
+	color:#2baab1;
+	border-right: 0;
+}
+.border-edit:hover{
+	background:#2baab1 ;
+	color: #fff;
+}
+.border-del{
+	border:1px red solid;
+	border-radius: 5px;
+	color:red;
+	margin-left: -4px;
+	border-bottom-left-radius: 0px;
+  border-top-left-radius: 0px;
+}
+.border-del:hover{
+	background:red ;
+	color: #fff;
+}
+#homTab_btn{
+	margin-left: 10%;
+}
+#delAll{
+	background: red;
+}
+.pagelist {
+	padding:10px 0;
+	text-align:center;
+}
+.pagelist span,.pagelist a{
+	border-radius:3px;
+	border:1px solid #dfdfdf;
+	display:inline-block;
+	padding:5px 12px;
+}
+.pagelist a{
+	margin:0 3px;
+}
+.pagelist span.current{
+	 background:#09F;
+	 color:#FFF;
+	 border-color:#09F;
+	  margin:0 2px;
+}
+.pagelist a:hover{
+	background:#09F;
+	color:#FFF;
+	border-color:#09F;
+}
+.pagelist label{
+	padding-left:15px;
+ 	color:#999;
+}
+.pagelist label b{
+	color:red;
+	font-weight:normal;
+	 margin:0 3px;
+}
+
+/*内容列表*/
+/*.search {
+    overflow: hidden;
+}*/
+/*.sidebar-menu{
+	transition: 0.3s;
+}*/
+.main-container{
+	transition: 0.5s;
+}
+.search li {
+    float: left;
+    margin-right: 15px;
+    line-height: 35px;
+}
+.border-bottom {
+	height:40px;
+	border-bottom:0;
+	margin-bottom:10px;
+}
+.input{
+	width: 80px;
+	line-height: 17px;
+	display: inline-block;
+	border-radius: 3px;
+	font-size: 14px;
+  padding: 7px;
+  border: solid 1px #ddd;
+}
+.table>tbody>tr>th{
+	vertical-align: middle;
+}
+th{
+	text-align: center;
+}
+.sort,.searchbtn{
+	border: solid 1px #3bd;
+	border-radius: 4px;
+}
+.button.sort:hover,.searchbtn:hover{
+  color: #fff;
+  border-color: #3bd;
+  background-color: #3bd;
+}
+.delall{
+	border-radius: 5px;
+}
+.table th {
+    border-bottom: 2px solid #ddd;
+    vertical-align: bottom;
+    padding: 8px;
+    text-align: center;
+		padding: 8px;
+    border-top: 1px solid #ddd
+}
+.table-hover > tbody > tr:hover > td, .table-hover > tbody > tr:hover > th {
+    background-color: #f9f9f9;
+}
+.table td {
+    border-top: 1px solid #ddd;
+    padding: 8px;
+    vertical-align: middle;
+}
