@@ -10,7 +10,7 @@
               菜单列表
             </li>
             <li class="bg-palette1 active">
-              <a href="javascript:;">
+              <router-link to="/">
                 <span class="menu-content block">
                   <span class="menu-icon"><i class="icon iconfont icon-shouye"></i></span>
                   <span class="text m-left-sm">首页</span>
@@ -18,7 +18,7 @@
                 <span class="menu-content-hover block">
                   首页
                 </span>
-              </a>
+              </router-link>
             </li>
             <li class="openable bg-palette3" @click="baseTab1">
               <a href="javascript:;">
@@ -31,10 +31,10 @@
                 </span>
               </a>
               <ul class="submenu bg-palette4 " v-show="baseshow">
-                <li><a href="webPage.html" target="right"><span class="submenu-label">网站设置</span><span class="submenu-icon"><i class="icon iconfont icon-enter"></i></span></a></li>
-                <li><a href="singlePage.html"><span class="submenu-label">单页管理</span><span class="submenu-icon"><i class="icon iconfont icon-enter"></i></span></a></li>
-                <li><a href="homeTab.html"><span class="submenu-label">首页轮播</span><span class="submenu-icon"><i class="icon iconfont icon-enter"></i></span></a></li>
-                <li><a href="brog.html"><span class="submenu-label">留言管理</span><span class="submenu-icon"><i class="icon iconfont icon-enter"></i></span></a></li>
+                <li @click="cancel"><router-link to="/webpage"><span class="submenu-label">网站设置</span><span class="submenu-icon"><i class="icon iconfont icon-enter"></i></span></router-link></li>
+                <li @click="cancel"><router-link to="/singlepage"><span class="submenu-label">单页管理</span><span class="submenu-icon"><i class="icon iconfont icon-enter"></i></span></router-link></li>
+                <li @click="cancel"><router-link to="/hometab"><span class="submenu-label">首页轮播</span><span class="submenu-icon"><i class="icon iconfont icon-enter"></i></span></router-link></li>
+                <li @click="cancel"><router-link to="/brog"><span class="submenu-label">留言管理</span><span class="submenu-icon"><i class="icon iconfont icon-enter"></i></span></router-link></li>
               </ul>
             </li>
             <li class="openable bg-palette2" @click="baseTab2">
@@ -49,9 +49,9 @@
                 </span>
               </a>
               <ul class="submenu" v-show="colwnshow">
-                <li><a href="ui_element.html"><span class="submenu-label">内容管理</span><span class="submenu-icon"><i class="icon iconfont icon-enter"></i></span></a></li>
-                <li><a href="button.html"><span class="submenu-label">添加内容</span><span class="submenu-icon"><i class="icon iconfont icon-enter"></i></span></a></li>
-                <li><a href="widget.html"><span class="submenu-label">分类管理</span><span class="submenu-icon"><i class="icon iconfont icon-enter"></i></span></a></li>
+                <li @click="cancel"><router-link to="/conpage"><span class="submenu-label">内容管理</span><span class="submenu-icon"><i class="icon iconfont icon-enter"></i></span></router-link></li>
+                <li @click="cancel"><router-link to="/addcon"><span class="submenu-label">添加内容</span><span class="submenu-icon"><i class="icon iconfont icon-enter"></i></span></router-link></li>
+                <li @click="cancel"><router-link to="/classify"><span class="submenu-label">分类管理</span><span class="submenu-icon"><i class="icon iconfont icon-enter"></i></span></router-link></li>
               </ul>
             </li>
           </ul>
@@ -61,6 +61,7 @@
   </div>
 </template>
 <script>
+
 export default {
   name:'vaside',
   data:()=>({
@@ -73,6 +74,9 @@ export default {
     },
     baseTab2(){
       this.colwnshow = !this.colwnshow
+    },
+    cancel(ev){
+      ev.cancelBubble = true
     }
   }
 }

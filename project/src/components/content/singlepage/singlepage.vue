@@ -1,30 +1,42 @@
 <template>
   <div id="singlepage">
-    <div id="singlepage">
-      <div class="design smart-widget widget-dark-blue">
-        <div class="smart-widget-header"><span class="text m-left-sm"><i class="icon iconfont icon-document"></i>单页管理</span></div>
-        <div class="form-group has-success clearfix">
-          <label class="control-label" for="inputSuccess1">标题：</label>
-          <input type="text" class="form-control" id="inputSuccess1" aria-describedby="helpBlock2">
+    <div class="main-container">
+      <div class="padding-md">
+        <div class="main">
+          <div class="design smart-widget widget-dark-blue">
+            <div class="smart-widget-header"><span class="text m-left-sm"><i class="icon iconfont icon-document"></i>添加首页轮播内容</span></div>
+            <div class="form-group has-success clearfix">
+              <label class="control-label" for="inputSuccess1">标题：</label>
+              <input type="text" class="form-control" id="inputSuccess1" aria-describedby="helpBlock2" v-model="initsingleData.title">
+            </div>
+            <div class="form-group has-success clearfix">
+              <label class="control-label" for="inputSuccess1">URL：</label>
+              <input type="text" class="form-control" id="inputSuccess1" aria-describedby="helpBlock2" v-model="initsingleData.url">
+            </div>
+            <div class="form-group has-success clearfix">
+              <label class="control-label" for="inputSuccess2">图片：</label>
+              <el-upload
+                class="upload-demo"
+                action="https://jsonplaceholder.typicode.com/posts/"
+                :on-remove="handleRemove"
+                :on-change='handleChange'
+                :file-list="fileList">
+                <el-button size="small" type="primary" id="picload">点击上传</el-button>
+                <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
+              </el-upload>
+            </div>
+            <div class="form-group has-success clearfix">
+              <label class="control-label" for="inputSuccess3">描述：</label>
+              <textarea class="form-control" rows="5" id="inputSuccess3" v-model="initsingleData.desc"></textarea>
+            </div>
+            <div class="form-group has-success clearfix">
+              <label class="control-label" for="inputSuccess1">排序：</label>
+              <input type="text" class="form-control" id="inputSuccess1" aria-describedby="helpBlock2" v-model="initsingleData.sort">
+            </div>
+            <button class="btn btn-success btn-sm no-shadow" id="sigle-submit">提交</button>
+            <button class="btn btn-success btn-sm no-shadow" id="sigle-cancel">取消</button>
+          </div>
         </div>
-        <div class="form-group has-success clearfix">
-          <label class="control-label" for="inputSuccess2">图片：</label>
-          <el-upload
-            class="upload-demo"
-            action="https://jsonplaceholder.typicode.com/posts/"
-            :on-preview="handlePreview"
-            :on-remove="handleRemove"
-            :file-list="fileList">
-            <el-button size="small" type="primary" id="picload">点击上传</el-button>
-            <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
-          </el-upload>
-        </div>
-        <div class="form-group has-success clearfix">
-          <label class="control-label" for="inputSuccess3">内容：</label>
-          <textarea class="form-control" rows="15" id="inputSuccess3"></textarea>
-        </div>
-        <button class="btn btn-success btn-sm no-shadow" id="sigle-submit">提交</button>
-        <button class="btn btn-success btn-sm no-shadow" id="sigle-cancel">取消</button>
       </div>
     </div>
   </div>
@@ -36,16 +48,24 @@ export default {
     return {
       fileList: [
         // {name: 'food.jpeg', url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'}
-      ]
+      ],
+      initsingleData:{
+        title:'',
+        url:'',
+        img:'',
+        desc:'',
+        sort:''
+      },
+      sigleData:[]
     }
   },
   methods: {
     handleRemove(file, fileList) {
       console.log(file, fileList);
     },
-    handlePreview(file) {
+    handleChange(file){
       console.log(file);
-    }
+    },
   },
 }
 </script>

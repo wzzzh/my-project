@@ -4,89 +4,55 @@
       <div class="padding-md">
         <div class="main">
           <!-- <homeindex></homeindex> -->
-          <div class="design smart-widget widget-dark-blue">
-            <div class="smart-widget-header"><span class="text m-left-sm"><i class="icon iconfont icon-createtask"></i></i> 内容列表</span></div>
-            <div class="tab_addCon">
-              <button class="btn btn-success" id="add_but">添加内容</button>
+          <div class="row m-top-md">
+            <div class="col-lg-3 col-sm-6">
+              <div class="statistic-box bg-danger m-bottom-md">
+                <div class="statistic-title">内容分类</div>
+                <div class="statistic-value">5</div>
+                <div class="m-top-md">11% Higher than last week</div>
+                <div class="statistic-icon-background">
+                  <i class="ion-eye"></i>
+                </div>
+              </div>
             </div>
-            <table class="table table-hover text-center">
-                <thead>
-                  <th width="10%">ID</th>
-                  <th width="20%">图片</th>
-                  <th width="15%">名称</th>
-                  <th width="20%">描述</th>
-                  <th width="10%">排序</th>
-                  <th width="15%">操作</th>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>1</td>
-                    <td><img src="./11.jpg" alt="" width="120" height="50" /></td>
-                    <td>首页焦点图</td>
-                    <td>描述文字....</td>
-                    <td>1</td>
-                    <td><div class="button-group">
-                    <a class="button border-edit" href="#add"><span class="icon-edit"></span> 修改</a>
-                    <a class="button border-del" href="javascript:void(0)" ><span class="icon-trash-o"></span> 删除</a>
-                  </div></td>
-                </tr>
-                <tr>
-                    <td>2</td>
-                    <td><img src="./11.jpg" alt="" width="120" height="50" /></td>
-                    <td>首页焦点图</td>
-                    <td>描述文字....</td>
-                    <td>1</td>
-                    <td><div class="button-group">
-                  <a class="button border-edit" href="#add"><span class="icon-edit"></span> 修改</a>
-                  <a class="button border-del" href="javascript:void(0)" ><span class="icon-trash-o"></span> 删除</a>
-                  </div></td>
-                </tr>
-                <tr>
-                   <td>3</td>
-                   <td><img src="./11.jpg" alt="" width="120" height="50" /></td>
-                   <td>首页焦点图</td>
-                   <td>描述文字....</td>
-                   <td>1</td>
-                   <td><div class="button-group">
-                   <a class="button border-edit" href="#add">修改</a>
-                   <a class="button border-del" href="javascript:void(0)" >删除</a>
-                   </div></td>
-                </tr>
-                </tbody>
-              </table>
+            <div class="col-lg-3 col-sm-6">
+              <div class="statistic-box bg-info m-bottom-md">
+                <div class="statistic-title">留言条目</div>
+                <div class="statistic-value">751</div>
+                <div class="m-top-md">8% Higher than last week</div>
+                <div class="statistic-icon-background">
+                  <i class="ion-ios7-cart-outline"></i>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-3 col-sm-6">
+              <div class="statistic-box bg-purple m-bottom-md">
+                <div class="statistic-title">首页条目</div>
+                <div class="statistic-value">129</div>
+                <div class="m-top-md">3% Higher than last week</div>
+                <div class="statistic-icon-background">
+                  <i class="ion-person-add"></i>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-3 col-sm-6">
+              <div class="statistic-box bg-success m-bottom-md">
+                <div class="statistic-title">网站总量</div>
+                <div class="statistic-value">11110</div>
+                <div class="m-top-md">7% Higher than last week</div>
+                <div class="statistic-icon-background">
+                  <i class="ion-stats-bars"></i>
+                </div>
+              </div>
+            </div>
           </div>
-          <div class="design smart-widget widget-dark-blue">
-            <div class="smart-widget-header"><span class="text m-left-sm"><i class="icon iconfont icon-document"></i>修改内容</span></div>
-            <div class="form-group has-success clearfix">
-              <label class="control-label" for="inputSuccess1">标题：</label>
-              <input type="text" class="form-control" id="inputSuccess1" aria-describedby="helpBlock2">
+          <div class="row">
+            <div class="col-md-6">
+                <div id="chart1" style="height:350px;background:pink;">图表1</div>
             </div>
-            <div class="form-group has-success clearfix">
-              <label class="control-label" for="inputSuccess1">URL：</label>
-              <input type="text" class="form-control" id="inputSuccess1" aria-describedby="helpBlock2">
+            <div class="col-md-6">
+                <div id="chart2" style="height:350px;background: skyblue;">图表2</div>
             </div>
-            <div class="form-group has-success clearfix">
-              <label class="control-label" for="inputSuccess2">图片：</label>
-              <el-upload
-                class="upload-demo"
-                action="https://jsonplaceholder.typicode.com/posts/"
-                :on-preview="handlePreview"
-                :on-remove="handleRemove"
-                :file-list="fileList">
-                <el-button size="small" type="primary" id="picload">点击上传</el-button>
-                <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
-              </el-upload>
-            </div>
-            <div class="form-group has-success clearfix">
-              <label class="control-label" for="inputSuccess3">描述：</label>
-              <textarea class="form-control" rows="5" id="inputSuccess3"></textarea>
-            </div>
-            <div class="form-group has-success clearfix">
-              <label class="control-label" for="inputSuccess1">排序：</label>
-              <input type="text" class="form-control" id="inputSuccess1" aria-describedby="helpBlock2">
-            </div>
-            <button class="btn btn-success btn-sm no-shadow" id="tab-submit">提交</button>
-            <button class="btn btn-success btn-sm no-shadow" id="tab-cancel">取消</button>
           </div>
           <!-- demo -->
 

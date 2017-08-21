@@ -3,7 +3,9 @@
     <div class="wrapper">
       <vheader></vheader>
       <vaside></vaside>
-      <router-view></router-view>
+      <keep-alive>
+        <router-view></router-view>
+      </keep-alive>
     </div>
   </div>
 </template>
