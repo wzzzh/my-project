@@ -18,7 +18,6 @@
               <el-upload
                 class="upload-demo"
                 action="https://jsonplaceholder.typicode.com/posts/"
-                :on-remove="handleRemove"
                 :on-change='handleChange'
                 :file-list="fileList">
                 <el-button size="small" type="primary" id="picload">点击上传</el-button>
@@ -33,8 +32,8 @@
               <label class="control-label" for="inputSuccess1">排序：</label>
               <input type="text" class="form-control" id="inputSuccess1" aria-describedby="helpBlock2" v-model="initsingleData.sort">
             </div>
-            <button class="btn btn-success btn-sm no-shadow" id="sigle-submit">提交</button>
-            <button class="btn btn-success btn-sm no-shadow" id="sigle-cancel">取消</button>
+            <button class="btn btn-success btn-sm no-shadow" id="sigle-submit" @click="submit">提交</button>
+            <button class="btn btn-success btn-sm no-shadow" id="sigle-cancel" @click="cancel">取消</button>
           </div>
         </div>
       </div>
@@ -44,6 +43,10 @@
 <script>
 export default {
   name: "singlepage",
+  mounted() {
+    this.singleData = getItem(this.singleData)
+    console.log(JSON.parse(localStorage.getItem('singleData')));
+  },
   data() {
     return {
       fileList: [
@@ -56,17 +59,68 @@ export default {
         desc:'',
         sort:''
       },
-      sigleData:[]
+      singleData:[],
+      // singleData:[{
+      //   id:1,
+      //   title:'生活家居',
+      //   url:'https://www.vip.com/detail-1506454-250072789.html',
+      //   img:'blob:http://localhost:8080/a9633595-3ea8-4e94-8773-a73d7d1d10db',
+      //   desc:'想买嘛',
+      //   sort:1
+      // }],
+
+    }
+  },
+  watch:{
+    a:function(){
+      this.singleData = JSON.parse(localStorage.getItem('singleData'))
+      console.log(JSON.parse(localStorage.getItem('singleData')));
     }
   },
   methods: {
-    handleRemove(file, fileList) {
-      console.log(file, fileList);
-    },
+    //图片状态发生改变时触发
     handleChange(file){
       console.log(file);
+      this.initsingleData.img = file.url;
     },
+    //提交
+    submit(){
+      let max = maxId(this.singleData)
+      this.singleData.unshift({
+        id:++max,
+        title:this.initsingleData.title,
+        url:this.initsingleData.url,
+        img:this.initsingleData.img,
+        desc:this.initsingleData.desc,
+        sort:this.initsingleData.sort
+      })
+      localStorage.setItem('singleData',JSON.stringify(this.singleData))
+      // this.initsingleData.title=this.initsingleData.url=this.initsingleData.img=this.initsingleData.desc=this.initsingleData.sort='';
+    },
+    cancel(){
+      this.initsingleData.title=this.initsingleData.url=this.initsingleData.img=this.initsingleData.desc=this.initsingleData.sort='';
+    }
   },
+}
+function maxId(data){
+  let max = 0;
+  data.forEach(e=>{
+    if(max<e.id){
+      max = e.id
+    }
+  })
+  return max;
+}
+
+function getItem(data){
+  return JSON.parse(localStorage.getItem('data')) || [{
+    id:1,
+    title:'生活家居',
+    url:'https://www.vip.com/detail-1506454-250072789.html',
+    img:'blob:http://localhost:8080/a9633595-3ea8-4e94-8773-a73d7d1d10db',
+    desc:'想买嘛',
+    sort:1
+  }];
 }
 </script>
 <style  scoped>

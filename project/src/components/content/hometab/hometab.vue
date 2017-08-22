@@ -18,39 +18,7 @@
                   <th width="15%">操作</th>
                 </thead>
                 <tbody>
-                  <tr>
-                    <td>1</td>
-                    <td><img src="" alt="" width="120" height="50" /></td>
-                    <td>首页焦点图</td>
-                    <td>描述文字....</td>
-                    <td>1</td>
-                    <td><div class="button-group">
-                    <a class="button border-edit" href="#add"><span class="icon-edit"></span> 修改</a>
-                    <a class="button border-del" href="javascript:void(0)" ><span class="icon-trash-o"></span> 删除</a>
-                  </div></td>
-                </tr>
-                <tr>
-                    <td>2</td>
-                    <td><img src="" alt="" width="120" height="50" /></td>
-                    <td>首页焦点图</td>
-                    <td>描述文字....</td>
-                    <td>1</td>
-                    <td><div class="button-group">
-                  <a class="button border-edit" href="#add"><span class="icon-edit"></span> 修改</a>
-                  <a class="button border-del" href="javascript:void(0)" ><span class="icon-trash-o"></span> 删除</a>
-                  </div></td>
-                </tr>
-                <tr>
-                   <td>3</td>
-                   <td><img src="" alt="" width="120" height="50" /></td>
-                   <td>首页焦点图</td>
-                   <td>描述文字....</td>
-                   <td>1</td>
-                   <td><div class="button-group">
-                   <a class="button border-edit" href="#add">修改</a>
-                   <a class="button border-del" href="javascript:void(0)" >删除</a>
-                   </div></td>
-                </tr>
+                  <tabtr  v-for="(val,key) in tabData" :pVal="val"></tabtr>
                 </tbody>
               </table>
           </div>
@@ -69,7 +37,7 @@
               <el-upload
                 class="upload-demo"
                 action="https://jsonplaceholder.typicode.com/posts/"
-                :on-preview="handlePreview"
+                :onchange="handleChange"
                 :on-remove="handleRemove"
                 :file-list="fileList">
                 <el-button size="small" type="primary" id="picload">点击上传</el-button>
@@ -84,7 +52,7 @@
               <label class="control-label" for="inputSuccess1">排序：</label>
               <input type="text" class="form-control" id="inputSuccess1" aria-describedby="helpBlock2">
             </div>
-            <button class="btn btn-success btn-sm no-shadow" id="tab-submit">提交</button>
+            <button class="btn btn-success btn-sm no-shadow" id="tab-submit" @click="submit">提交</button>
             <button class="btn btn-success btn-sm no-shadow" id="tab-cancel">取消</button>
           </div>
         </div>
@@ -93,23 +61,40 @@
   </div>
 </template>
 <script>
+import tabtr from './homeTable.vue'
 export default {
   name: "hometab",
+  components: {
+    tabtr
+  },
+  mounted(){
+   this.tabData = JSON.parse(localStorage.getItem('singleData'))
+  },
   data() {
     return {
       fileList: [
         // {name: 'food.jpeg', url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'}
-      ]
+      ],
+      tabData:[],
+      pVal:''
     }
   },
   methods: {
     handleRemove(file, fileList) {
       console.log(file, fileList);
     },
-    handlePreview(file) {
+    handleChange(file) {
       console.log(file);
+    },
+    submit(){
+      console.log(1);
     }
   },
+  watch:{
+    a:function(){
+      this.tabData = JSON.parse(localStorage.getItem('singleData'))
+    }
+  }
 }
 </script>
 <style  scoped>
