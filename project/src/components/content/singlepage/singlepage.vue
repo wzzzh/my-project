@@ -44,8 +44,9 @@
 export default {
   name: "singlepage",
   mounted() {
-    this.singleData = getItem(this.singleData)
-    console.log(JSON.parse(localStorage.getItem('singleData')));
+    if(localStorage.getItem('singleData')){
+      this.singleData = JSON.parse(localStorage.getItem('singleData'));
+    }
   },
   data() {
     return {
@@ -60,21 +61,6 @@ export default {
         sort:''
       },
       singleData:[],
-      // singleData:[{
-      //   id:1,
-      //   title:'生活家居',
-      //   url:'https://www.vip.com/detail-1506454-250072789.html',
-      //   img:'blob:http://localhost:8080/a9633595-3ea8-4e94-8773-a73d7d1d10db',
-      //   desc:'想买嘛',
-      //   sort:1
-      // }],
-
-    }
-  },
-  watch:{
-    a:function(){
-      this.singleData = JSON.parse(localStorage.getItem('singleData'))
-      console.log(JSON.parse(localStorage.getItem('singleData')));
     }
   },
   methods: {
@@ -86,7 +72,7 @@ export default {
     //提交
     submit(){
       let max = maxId(this.singleData)
-      this.singleData.unshift({
+      this.singleData.push({
         id:++max,
         title:this.initsingleData.title,
         url:this.initsingleData.url,
@@ -94,8 +80,9 @@ export default {
         desc:this.initsingleData.desc,
         sort:this.initsingleData.sort
       })
+      // console.log(JSON.parse(localStorage.getItem('singleData')));
       localStorage.setItem('singleData',JSON.stringify(this.singleData))
-      // this.initsingleData.title=this.initsingleData.url=this.initsingleData.img=this.initsingleData.desc=this.initsingleData.sort='';
+      this.initsingleData.title=this.initsingleData.url=this.initsingleData.img=this.initsingleData.desc=this.initsingleData.sort='';
     },
     cancel(){
       this.initsingleData.title=this.initsingleData.url=this.initsingleData.img=this.initsingleData.desc=this.initsingleData.sort='';
@@ -103,24 +90,17 @@ export default {
   },
 }
 function maxId(data){
-  let max = 0;
-  data.forEach(e=>{
-    if(max<e.id){
-      max = e.id
-    }
-  })
-  return max;
+    let max = 0;
+    data.forEach(e=>{
+      if(max<e.id){
+        max = e.id
+      }
+    })
+    return max;
 }
 
 function getItem(data){
-  return JSON.parse(localStorage.getItem('data')) || [{
-    id:1,
-    title:'生活家居',
-    url:'https://www.vip.com/detail-1506454-250072789.html',
-    img:'blob:http://localhost:8080/a9633595-3ea8-4e94-8773-a73d7d1d10db',
-    desc:'想买嘛',
-    sort:1
-  }];
+  return JSON.parse(localStorage.getItem('data')) || [];
 }
 </script>
 <style  scoped>

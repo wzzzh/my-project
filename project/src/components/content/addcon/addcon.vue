@@ -7,15 +7,14 @@
             <div class="smart-widget-header"><span class="text m-left-sm"><i class="icon iconfont icon-document"></i>添加内容</span></div>
             <div class="form-group has-success clearfix">
               <label class="control-label" for="inputSuccess1">标题：</label>
-              <input type="text" class="form-control" id="inputSuccess1" aria-describedby="helpBlock2">
+              <input type="text" class="form-control" id="inputSuccess1" aria-describedby="helpBlock2" v-model="initaddData.title">
             </div>
             <div class="form-group has-success clearfix">
               <label class="control-label" for="inputSuccess2">图片：</label>
               <el-upload
                 class="upload-demo"
                 action="https://jsonplaceholder.typicode.com/posts/"
-                :on-preview="handlePreview"
-                :on-remove="handleRemove"
+                :on-change="handleChange"
                 :file-list="fileList">
                 <el-button size="small" type="primary" id="picload">点击上传</el-button>
                 <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
@@ -25,7 +24,7 @@
             <div class="btn-group">
               <label class="control-label">分类标题：</label>
               <select name="cid" class="input" style="width:120px; " >
-                <option value="">分类标题</option>
+                <option value=""></option>
                 <option value="">分类1</option>
                 <option value="">分类2</option>
               </select>
@@ -69,21 +68,48 @@
 <script>
 export default {
   name: "addcon",
+  // mounted() {
+  //   if(localStorage.getItem('addData')){
+  //     this.singleData = JSON.parse(localStorage.getItem('addData'));
+  //   }
+  // },
   data() {
     return {
-      fileList: [
-        // {name: 'food.jpeg', url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'}
-      ]
+      fileList: [],
+      initaddData:{
+        title:'',
+        img:'',
+        attr:1,
+        desc:'',
+        keyTitle:'',
+        sort:'',
+        time:'',
+        count:''
+      },
+      addData:[],
+      selected: 1
     }
   },
   methods: {
-    handleRemove(file, fileList) {
-      console.log(file, fileList);
-    },
-    handlePreview(file) {
+    handleChange(file) {
       console.log(file);
     }
   },
+}
+
+
+function maxId(data){
+    let max = 0;
+    data.forEach(e=>{
+      if(max<e.id){
+        max = e.id
+      }
+    })
+    return max;
+}
+
+function getItem(data){
+  return JSON.parse(localStorage.getItem('data')) || [];
 }
 </script>
 <style  scoped>

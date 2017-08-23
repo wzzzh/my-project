@@ -6,7 +6,7 @@
           <div class="design smart-widget widget-dark-blue">
             <div class="smart-widget-header"><span class="text m-left-sm"><i class="icon iconfont icon-createtask"></i></i> 分类列表</span></div>
             <div class="tab_addCon">
-              <button class="btn btn-success" id="add_but">添加内容</button>
+              <button class="btn btn-success" id="add_but" ><router-link to="/addClassify">添加内容</router-link></button>
             </div>
             <table class="table table-hover text-center">
                 <thead>
@@ -46,7 +46,7 @@
                 </tbody>
               </table>
           </div>
-          <div class="design smart-widget widget-dark-blue">
+          <!-- <div class="design smart-widget widget-dark-blue">
             <div class="smart-widget-header"><span class="text m-left-sm"><i class="icon iconfont icon-document"></i>添加分类</span></div>
             <div class="btn-group classify1">
               <label class="control-label">上级分类：</label>
@@ -75,20 +75,27 @@
             </div>
             <button class="btn btn-success btn-sm no-shadow" id="classify-submit">提交</button>
             <button class="btn btn-success btn-sm no-shadow" id="classify-cancel">取消</button>
-          </div>
+          </div> -->
         </div>
       </div>
     </div>
   </div>
 </template>
 <script>
+import addClassify from './addClassify'
 export default {
   name: "classify",
+  components: {
+    addClassify
+  }
 
 }
 </script>
 <style scoped>
 /*添加内容*/
+#add_but a{
+  color:#fff;
+}
 .tiptitle{
   display:inline-block;
   vertical-align: middle;

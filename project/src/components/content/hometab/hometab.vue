@@ -6,7 +6,7 @@
           <div class="design smart-widget widget-dark-blue">
             <div class="smart-widget-header"><span class="text m-left-sm"><i class="icon iconfont icon-createtask"></i></i> 内容列表</span></div>
             <div class="tab_addCon">
-              <button class="btn btn-success" id="add_but"><router-link to="/singlepage">添加内容</router-link></button>
+              <button class="btn btn-success" id="add_but"><router-link to="/singlepage" style="color:#fff">添加内容</router-link></button>
             </div>
             <table class="table table-hover text-center">
                 <thead>
@@ -18,7 +18,8 @@
                   <th width="15%">操作</th>
                 </thead>
                 <tbody>
-                  <tabtr  v-for="(val,key) in tabData" :pVal="val"></tabtr>
+
+                  <tabtr @tabChildDel="partabDel" v-for="(val,key) in tabData" :pVal="tabData[key]" ></tabtr>
                 </tbody>
               </table>
           </div>
@@ -37,7 +38,7 @@
               <el-upload
                 class="upload-demo"
                 action="https://jsonplaceholder.typicode.com/posts/"
-                :onchange="handleChange"
+                :on-change="handleChange"
                 :on-remove="handleRemove"
                 :file-list="fileList">
                 <el-button size="small" type="primary" id="picload">点击上传</el-button>
@@ -52,7 +53,7 @@
               <label class="control-label" for="inputSuccess1">排序：</label>
               <input type="text" class="form-control" id="inputSuccess1" aria-describedby="helpBlock2">
             </div>
-            <button class="btn btn-success btn-sm no-shadow" id="tab-submit" @click="submit">提交</button>
+            <button class="btn btn-success btn-sm no-shadow" id="tab-submit">提交</button>
             <button class="btn btn-success btn-sm no-shadow" id="tab-cancel">取消</button>
           </div>
         </div>
@@ -75,8 +76,7 @@ export default {
       fileList: [
         // {name: 'food.jpeg', url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'}
       ],
-      tabData:[],
-      pVal:''
+      tabData:[]
     }
   },
   methods: {
@@ -86,13 +86,10 @@ export default {
     handleChange(file) {
       console.log(file);
     },
-    submit(){
-      console.log(1);
-    }
-  },
-  watch:{
-    a:function(){
-      this.tabData = JSON.parse(localStorage.getItem('singleData'))
+    partabDel(val,ev){
+      alert(val)
+      this.tabData=this.tabData.filter(e=>e.id != val)
+      localStorage.setItem('singleData',JSON.stringify(this.tabData))
     }
   }
 }

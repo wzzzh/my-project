@@ -93,11 +93,30 @@
 <script>
 export default {
   name: "brog",
-
+  data(){
+    return{
+      initData:{
+        name:'',
+        tel:'',
+        email:'',
+        other:'',
+        con:'',
+        brogtime:''
+      },
+      brogData:[{
+        id:1,
+        name:'白菜',
+        tel:'11111111',
+        email:'aa@qq.com',
+        other:'我就是想留个言',
+        con:'这是我留言的内容',
+        borgtime: new Date()
+      }]
+    }
+  }
 }
 </script>
 <style  scoped>
-@import '../../../assets/css/style.css';
 th{
   text-align: center
 }
