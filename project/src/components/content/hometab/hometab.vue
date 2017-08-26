@@ -18,43 +18,41 @@
                   <th width="15%">操作</th>
                 </thead>
                 <tbody>
-
-                  <tabtr @tabChildDel="partabDel" v-for="(val,key) in tabData" :pVal="tabData[key]" ></tabtr>
+                  <tabtr @tabChildDel="partabDel"  @childTabEdit="parTabEdit" v-for="(val,key) in tabData" :pVal="tabData[key]"></tabtr>
                 </tbody>
               </table>
           </div>
-          <div class="design smart-widget widget-dark-blue">
+          <div class="design smart-widget widget-dark-blue" id="edit">
             <div class="smart-widget-header"><span class="text m-left-sm"><i class="icon iconfont icon-document"></i>修改内容</span></div>
             <div class="form-group has-success clearfix">
               <label class="control-label" for="inputSuccess1">标题：</label>
-              <input type="text" class="form-control" id="inputSuccess1" aria-describedby="helpBlock2">
+              <input type="text" class="form-control title" id="inputSuccess1" aria-describedby="helpBlock2" :value="editData.title">
             </div>
             <div class="form-group has-success clearfix">
               <label class="control-label" for="inputSuccess1">URL：</label>
-              <input type="text" class="form-control" id="inputSuccess1" aria-describedby="helpBlock2">
+              <input type="text" class="form-control url" id="inputSuccess1" aria-describedby="helpBlock2" :value="editData.url">
             </div>
             <div class="form-group has-success clearfix">
               <label class="control-label" for="inputSuccess2">图片：</label>
               <el-upload
-                class="upload-demo"
+                class="upload-demo img"
                 action="https://jsonplaceholder.typicode.com/posts/"
                 :on-change="handleChange"
-                :on-remove="handleRemove"
-                :file-list="fileList">
+              >
                 <el-button size="small" type="primary" id="picload">点击上传</el-button>
                 <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
               </el-upload>
             </div>
             <div class="form-group has-success clearfix">
               <label class="control-label" for="inputSuccess3">描述：</label>
-              <textarea class="form-control" rows="5" id="inputSuccess3"></textarea>
+              <textarea class="form-control desc" rows="5" id="inputSuccess3" :value="editData.desc"></textarea>
             </div>
             <div class="form-group has-success clearfix">
               <label class="control-label" for="inputSuccess1">排序：</label>
-              <input type="text" class="form-control" id="inputSuccess1" aria-describedby="helpBlock2">
+              <input type="text" class="form-control sort" id="inputSuccess1" aria-describedby="helpBlock2" :value="editData.sort">
             </div>
-            <button class="btn btn-success btn-sm no-shadow" id="tab-submit">提交</button>
-            <button class="btn btn-success btn-sm no-shadow" id="tab-cancel">取消</button>
+            <button class="btn btn-success btn-sm no-shadow" id="tab-submit" @click="submit">提交</button>
+            <button class="btn btn-success btn-sm no-shadow" id="tab-cancel" @click="cancel"><router-link to="/hometab">取消</router-link></button>
           </div>
         </div>
       </div>
@@ -62,7 +60,8 @@
   </div>
 </template>
 <script>
-import tabtr from './homeTable.vue'
+import tabtr from './homeTable'
+import $ from 'jquery'
 export default {
   name: "hometab",
   components: {
@@ -76,7 +75,10 @@ export default {
       fileList: [
         // {name: 'food.jpeg', url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'}
       ],
-      tabData:[]
+      tabData:[],
+      editData:{},
+      oldeditData:{},
+      editImg:''
     }
   },
   methods: {
@@ -84,17 +86,40 @@ export default {
       console.log(file, fileList);
     },
     handleChange(file) {
-      console.log(file);
+      this.editImg = file.url;
     },
     partabDel(val,ev){
-      alert(val)
       this.tabData=this.tabData.filter(e=>e.id != val)
       localStorage.setItem('singleData',JSON.stringify(this.tabData))
+    },
+    parTabEdit(val){
+      this.oldeditData=Object.assign(val);
+      this.editData =Object.assign(val);
+    },
+    submit(){
+        this.tabData.forEach(e=>{
+          if(e.id==this.editData.id){
+            e.title = $('.title').val();
+            e.url = $('.url').val();
+            e.img = this.editImg;
+            e.desc = $('.desc').val();
+            e.sort = $('.sort').val();
+          }
+        })
+        localStorage.setItem('singleData',JSON.stringify(this.tabData))
+        this.editData = {};
+    },
+    cancel(){
+      this.editData={};
     }
   }
 }
 </script>
 <style  scoped>
+#tab-cancel a{
+  color:#fff;
+}
+
 label{
 	width: 100px;
 	padding-top:7px;

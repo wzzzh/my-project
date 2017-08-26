@@ -23,8 +23,8 @@
             <!-- Split button -->
             <div class="btn-group">
               <label class="control-label">分类标题：</label>
-              <select name="cid" class="input" style="width:120px; " v-model="selected">
-                <option v-for="option in options" :value="option">{{option.txt}}</option>
+              <select name="cid" class="input" style="width:120px; " v-model="opt">
+                <option v-for="option in selected">{{option.txt}}</option>
               </select>
             </div>
             <div class="form-group has-success clearfix">
@@ -71,11 +71,12 @@ export default {
     if(localStorage.getItem('classifyData')){
       let arr = JSON.parse(localStorage.getItem('classifyData'));
       arr.forEach((e,i)=>{
-        this.options.push({
+        this.selected.push({
           txt:e.title,
           val:e.id
         })
       })
+      this.opt = this.selected[0].txt;
     }
     if(localStorage.getItem('addData')){
       this.addData = JSON.parse(localStorage.getItem('addData'));
@@ -98,7 +99,8 @@ export default {
       },
       addData:[],
       selected:[],
-      options:[]
+      // options:[],
+      opt:''
     }
   },
   methods: {
@@ -131,7 +133,8 @@ export default {
           count:this.initaddData.count,
           checked:this.initaddData.checked
         })
-      localStorage.setItem('addData',JSON.stringify(this.addData))
+        console.log(this.opt);
+      // localStorage.setItem('addData',JSON.stringify(this.addData))
       this.initaddData.title=this.initaddData.desc=this.initaddData.keyTitle=this.initaddData.sort=this.initaddData.time=this.initaddData.count='';
       this.initaddData.attr='首页'
     },

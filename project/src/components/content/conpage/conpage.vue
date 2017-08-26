@@ -10,7 +10,12 @@
             </div>
             <div class="padding border-bottom">
               <ul class="search" style="padding-left:10px;">
-                <li> <button class="btn btn-success" id="checkAll"><router-link to="/addcon">添加内容</router-link></button></li>
+                <li>
+                  <button class="btn btn-success" id="checkAll">
+                    <router-link to="/addcon">添加内容</router-link>
+                  </button>
+                  <button class="btn btn-success" id="allData" @click="dataAll" > 全部</button>
+              </li>
                 <li>搜索：</li>
                 <li>
                   首页
@@ -36,14 +41,20 @@
                 </li>
                   <li>
                     分类
-                    <select name="cid" class="input" style="width:120px; " v-model="selected" @change="classSel($event)">
-                      <option v-for="option in options" :value="option">{{option.txt}}</option>
+                    <select name="cid" class="input" style="width:120px; " v-model="opt" @change="selectedTxt">
+                      <option v-for="option in selected" >{{option.txt}}</option>
                     </select>
                   </li>
-                </if>
-                <li>
-                  <input type="text" placeholder="请输入搜索关键字" name="keywords" class="input" style="width:200px; line-height:17px;display:inline-block" />
-                  <a href="javascript;" class="button searchbtn"  > 搜索</a></li>
+                <li id="spe">
+                  <input
+                    type="text"
+                    placeholder="请输入搜索关键字"
+                    class="input"
+                    style="width:200px; line-height:17px;display:inline-block"
+                    v-model="searchVal"
+                  />
+                  <a href="javascript:;" class="button searchbtn" @click="search" > 搜索</a>
+                </li>
               </ul>
             </div>
             <!--  table-->
@@ -111,14 +122,14 @@ export default {
     if(localStorage.getItem('classifyData')){
       let arr = JSON.parse(localStorage.getItem('classifyData'));
       arr.forEach((e,i)=>{
-        this.options.push({
+        this.selected.push({
           txt:e.title,
           val:e.id
         })
       })
+      this.opt = this.selected[0].txt;
     }
     this.oldTablist = Object.assign(this.tablist);
-    console.log(this.oldTablist);
   },
   data(){
     return{
@@ -126,8 +137,9 @@ export default {
       all:false,
       sortState:false,
       selected:[],
-      options:[],
-      oldTablist:[]
+      oldTablist:[],
+      opt:'',
+      searchVal:'',
     }
   },
   methods:{
@@ -188,12 +200,15 @@ export default {
         this.tablist = this.oldTablist;
       }
     },
-    classSel(ev){
-        this.tablist=this.tablist.filter(e=>{
-          console.log(e.classTitle,this.selected.txt)
-           e.classTitle === this.selected.txt
-        });
-        this.tablist = this.oldTablist;
+    selectedTxt:function(){
+      // this.tablist = this.oldTablist
+      this.tablist = this.tablist.filter(e=>e.classTitle == this.opt)
+    },
+    search(){
+      this.tablist=this.tablist.filter(e=>e.title === this.searchVal);
+    },
+    dataAll(){
+      this.tablist = this.oldTablist;
     }
   },
   computed:{
@@ -206,9 +221,24 @@ export default {
       }
     }
   },
+  watch:{
+
+  }
 }
 </script>
 <style  scoped>
+.searchbtn{
+  padding:7px 12px;
+}
+#allData{
+  width: 75px;
+  height: 40px;
+  margin-left: 0;
+  font-size: 14px;
+}
+#spe{
+  margin-right: 0
+}
 #checkAll a{
   color:#fff;
 }
