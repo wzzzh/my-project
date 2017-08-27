@@ -13,6 +13,9 @@ import $ from 'jquery'
 
 Vue.config.productionTip = false
 Vue.use(ElementUI)
+Vue.prototype.$goRoute = function (index) {
+  this.$router.push(index)
+}
 
 /* eslint-disable no-new */
 new Vue({

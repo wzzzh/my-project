@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+import login from '@/components/login/login'
 import home from '@/components/content/home/home'
 import mainbox from '@/components/content/mainbox/mainbox'
 import webpage from '@/components/content/webpage/webpage'
@@ -10,6 +11,7 @@ import conpage from '@/components/content/conpage/conpage'
 import addcon from '@/components/content/addcon/addcon'
 import classify from '@/components/content/classify/classify'
 import addClassify from '@/components/content/classify/addClassify'
+import setlogin from '@/components/login/setlogin'
 
 
 Vue.use(Router)
@@ -18,7 +20,12 @@ export default new Router({
   mode:'history',
   routes: [
     {
-      path: '/',
+      path:'/',
+      name:'login',
+      component:login,
+    },
+    {
+      path: '/home',
       name: 'home',
       component: home
     },
@@ -61,6 +68,11 @@ export default new Router({
       path:'/addClassify',
       name:'addClassify',
       component:addClassify
+    },
+    {
+      path:'/setlogin',
+      name:'setlogin',
+      component:setlogin
     }
   ]
 })

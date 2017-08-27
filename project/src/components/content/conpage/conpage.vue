@@ -92,7 +92,13 @@
                 </tr>
                 <tr>
                   <td style="text-align:left; padding:19px 0;padding-left:20px;">
-                    <input type="checkbox" id="checkall" v-model="all" @click="checkedAll" :checked="computAll"/>全选
+                    <input
+                      type="checkbox"
+                      id="checkall"
+                      v-model="all"
+                      @click="checkedAll"
+                      :checked="computAll"
+                    />全选
                   </td>
                   <td colspan="7" style="text-align:left;padding-left:20px;">
                     <a href="javascript:;" class="button delall border-del" style="padding:5px 15px;" @click="delAll">批量删除</a>

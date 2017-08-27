@@ -10,7 +10,7 @@
               菜单列表
             </li>
             <li class="bg-palette1 active">
-              <router-link to="/">
+              <router-link to="/home">
                 <span class="menu-content block">
                   <span class="menu-icon"><i class="icon iconfont icon-shouye"></i></span>
                   <span class="text m-left-sm">首页</span>

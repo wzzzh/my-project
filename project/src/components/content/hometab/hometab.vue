@@ -18,7 +18,7 @@
                   <th width="15%">操作</th>
                 </thead>
                 <tbody>
-                  <tabtr @tabChildDel="partabDel"  @childTabEdit="parTabEdit"  @childEditshow="pEditshow" v-for="(val,key) in tabData" :pVal="tabData[key]" ></tabtr>
+                  <tabtr @tabChildDel="partabDel"  @childTabEdit="parTabEdit"  @childEditshow="pEditshow" v-for="(val,key) in tabData" :pVal="val" ></tabtr>
                 </tbody>
                 <tfoot>
                   <div class="block">

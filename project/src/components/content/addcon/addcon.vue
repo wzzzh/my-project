@@ -134,7 +134,7 @@ export default {
           checked:this.initaddData.checked
         })
         console.log(this.opt);
-      // localStorage.setItem('addData',JSON.stringify(this.addData))
+      localStorage.setItem('addData',JSON.stringify(this.addData))
       this.initaddData.title=this.initaddData.desc=this.initaddData.keyTitle=this.initaddData.sort=this.initaddData.time=this.initaddData.count='';
       this.initaddData.attr='首页'
     },
