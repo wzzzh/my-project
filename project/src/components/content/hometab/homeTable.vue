@@ -20,7 +20,7 @@
 import { MessageBox } from 'element-ui';
 export default {
   name: "homeTable",
-  props:['pVal'],
+  props:['pVal',],
   data(){
     return {
       val:this.pVal,
@@ -33,6 +33,7 @@ export default {
     },
     edit(pVal,ev){
       this.$emit('childTabEdit',pVal)
+      this.$emit('childEditshow',true)
     }
   }
 }

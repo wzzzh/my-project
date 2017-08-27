@@ -59,16 +59,19 @@
             </div>
             <!--  table-->
             <table class="table table-hover text-center">
-              <tr>
-                <th width="6%" style="text-align:left; padding-left:20px;">ID</th>
-                <th width="10%">排序</th>
-                <th>图片</th>
-                <th width="20%">名称</th>
-                <th width="6%">属性</th>
-                <th width="10%">分类名称</th>
-                <th width="10%">更新时间</th>
-                <th width="20%">操作</th>
-              </tr>
+              <thead>
+                <tr>
+                  <th width="6%" style="text-align:left; padding-left:20px;">ID</th>
+                  <th width="10%">排序</th>
+                  <th>图片</th>
+                  <th width="20%">名称</th>
+                  <th width="6%">属性</th>
+                  <th width="10%">分类名称</th>
+                  <th width="10%">更新时间</th>
+                  <th width="20%">操作</th>
+                </tr>
+              </thead>
+              <tbody>
                 <tr v-for="val in tablist">
                   <td style="text-align:left; padding-left:20px;">
                     <input type="checkbox" name="id[]" v-model="val.checked"/>
@@ -82,27 +85,46 @@
                   <td>{{val.time}}</td>
                   <td>
                     <div class="button-group">
-                      <a class="button border-edit" href="javascript:;"> 修改</a>
+                      <a class="button border-edit" href="javascript:;" @click="edit(val)"> 修改</a>
                       <a class="button border-del" href="javascript:;" @click="del(val)"> 删除</a>
                     </div>
                   </td>
                 </tr>
-              <tr>
-                <td style="text-align:left; padding:19px 0;padding-left:20px;">
-                  <input type="checkbox" id="checkall" v-model="all" @click="checkedAll" :checked="computAll"/>全选
-                </td>
-                <td colspan="7" style="text-align:left;padding-left:20px;">
-                  <a href="javascript:;" class="button delall border-del" style="padding:5px 15px;" @click="delAll">批量删除</a>
-                  <a href="javascript:;" style="padding:5px 15px; margin:0 10px;" class="button sort" @click="sortData"> 排序</a>
-                </td>
-              </tr>
-              <tr>
-                <td colspan="8"><div class="pagelist"> <a href="">上一页</a> <span class="current">1</span><a href="">2</a><a href="">3</a><a href="">下一页</a><a href="">尾页</a> </div></td>
-              </tr>
+                <tr>
+                  <td style="text-align:left; padding:19px 0;padding-left:20px;">
+                    <input type="checkbox" id="checkall" v-model="all" @click="checkedAll" :checked="computAll"/>全选
+                  </td>
+                  <td colspan="7" style="text-align:left;padding-left:20px;">
+                    <a href="javascript:;" class="button delall border-del" style="padding:5px 15px;" @click="delAll">批量删除</a>
+                    <a href="javascript:;" style="padding:5px 15px; margin:0 10px;" class="button sort" @click="sortData"> 排序</a>
+                  </td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <div class="block">
+                  <!-- <span class="demonstration">完整功能</span> -->
+                  <el-pagination
+                    @size-change="handleSizeChange"
+                    @current-change="handleCurrentChange"
+                    :current-page="currentPage"
+                    :page-sizes="pagesizes"
+                    :page-size="pagesize"
+                    layout="total, sizes, prev, pager, next, jumper"
+                    :total="len">
+                  </el-pagination>
+                </div>
+              </tfoot>
             </table>
           </div>
           <!--  修改内容-->
-          <conedit></conedit>
+          <conedit
+            v-show="editshow"
+            @changeShow="pchangeShow"
+            :pData="editData"
+            :pSel="selected"
+            :pShow="editshow"
+            @childEditdata="pEditdata"
+          ></conedit>
       </div>
     </div>
     </div>
@@ -116,9 +138,6 @@ export default {
     conedit
   },
   mounted() {
-    if(localStorage.getItem('addData')){
-      this.tablist = JSON.parse(localStorage.getItem('addData'));
-    }
     if(localStorage.getItem('classifyData')){
       let arr = JSON.parse(localStorage.getItem('classifyData'));
       arr.forEach((e,i)=>{
@@ -129,10 +148,28 @@ export default {
       })
       this.opt = this.selected[0].txt;
     }
+    if(localStorage.getItem('addData')){
+      this.initTablist = JSON.parse(localStorage.getItem('addData'));
+    }
+    //数据总长度
+    this.len = this.initTablist.length;
+    //切换每页显示几条
+    this.pagesizes=[5,20,50,100];
+    //一页8条
+    this.pagesize = this.pagesizes[0];
+    //起始页
+    this.start = (this.currentPage-1)*this.pagesize;
+    //结束页
+    this.end = this.start+this.pagesize;
+    //通过
+    for(let i =this.start;i<this.end;i++){
+      this.initTablist?this.tablist.push(this.initTablist[i]):[];
+    }
     this.oldTablist = Object.assign(this.tablist);
   },
   data(){
     return{
+      initTablist:[],
       tablist:[],
       all:false,
       sortState:false,
@@ -140,6 +177,20 @@ export default {
       oldTablist:[],
       opt:'',
       searchVal:'',
+      editshow:false,
+      editData:{},
+      //默认起始页是第一页
+      currentPage:1,
+      //数据总长度
+      len:0,
+      //页数调整
+      pagesizes:[],
+      //每页显示的条数
+      pagesize:0,
+      //起始位置
+      start:0,
+      //结束位置
+      end:0
     }
   },
   methods:{
@@ -201,7 +252,7 @@ export default {
       }
     },
     selectedTxt:function(){
-      // this.tablist = this.oldTablist
+      this.tablist = this.oldTablist
       this.tablist = this.tablist.filter(e=>e.classTitle == this.opt)
     },
     search(){
@@ -209,6 +260,68 @@ export default {
     },
     dataAll(){
       this.tablist = this.oldTablist;
+    },
+    edit(val){
+      this.editshow = true
+      this.editData = Object.assign(val);
+    },
+    pchangeShow(bool){
+      this.editshow =bool;
+    },
+    pEditdata(data){
+      console.log(this.tablist);
+      this.tablist.forEach((e,i)=>{
+        if(e.id==data.id){
+          this.tablist.splice(i,1,data)
+        }
+      })
+      this.oldTablist.forEach((e,i)=>{
+        if(e.id==this.tablist.id){
+          alert(1)
+          this.oldTablist.splice(i,1,this.tablist)
+        }
+      })
+      localStorage.setItem('addData',JSON.stringify(this.oldTablist))
+    },
+    handleSizeChange(val) {
+      //  console.log(`每页 ${val} 条`);
+       this.pagesize = val;
+       //起始页
+       this.start = (this.currentPage-1)*this.pagesize;
+       //结束页
+       this.end = this.start+this.pagesize;
+     },
+     handleCurrentChange(val) {
+       this.currentPage = val;
+       this.start = (this.currentPage-1)*this.pagesize;
+       //结束页
+       this.end = this.start+this.pagesize;
+      //  console.log(`当前页: ${val}`);
+    }
+  },
+  watch:{
+    currentPage:function(){
+        this.tablist=[];
+        if(this.end>this.len){
+          this.end = this.len;
+        }
+        console.log(this.start,this.end);
+        //通过
+        for(let i =this.start;i<this.end;i++){
+          this.initTablist?this.tablist.push(this.initTablist[i]):[];
+        }
+
+    },
+    pagesize:function(){
+      this.tablist=[];
+      if(this.end>this.len){
+        this.end = this.len;
+      }
+      // console.log(this.start,this.end);
+      //通过
+      for(let i =this.start;i<this.end;i++){
+        this.initTablist?this.tablist.push(this.initTablist[i]):[];
+      }
     }
   },
   computed:{
@@ -221,9 +334,6 @@ export default {
       }
     }
   },
-  watch:{
-
-  }
 }
 </script>
 <style  scoped>

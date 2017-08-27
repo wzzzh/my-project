@@ -18,11 +18,25 @@
                   <th width="15%">操作</th>
                 </thead>
                 <tbody>
-                  <tabtr @tabChildDel="partabDel"  @childTabEdit="parTabEdit" v-for="(val,key) in tabData" :pVal="tabData[key]"></tabtr>
+                  <tabtr @tabChildDel="partabDel"  @childTabEdit="parTabEdit"  @childEditshow="pEditshow" v-for="(val,key) in tabData" :pVal="tabData[key]" ></tabtr>
                 </tbody>
+                <tfoot>
+                  <div class="block">
+                    <!-- <span class="demonstration">完整功能</span> -->
+                    <el-pagination
+                      @size-change="handleSizeChange"
+                      @current-change="handleCurrentChange"
+                      :current-page="currentPage"
+                      :page-sizes="pagesizes"
+                      :page-size="pagesize"
+                      layout="total, sizes, prev, pager, next, jumper"
+                      :total="len">
+                    </el-pagination>
+                  </div>
+                </tfoot>
               </table>
           </div>
-          <div class="design smart-widget widget-dark-blue" id="edit">
+          <div class="design smart-widget widget-dark-blue" id="edit" v-show="editshow">
             <div class="smart-widget-header"><span class="text m-left-sm"><i class="icon iconfont icon-document"></i>修改内容</span></div>
             <div class="form-group has-success clearfix">
               <label class="control-label" for="inputSuccess1">标题：</label>
@@ -68,17 +82,45 @@ export default {
     tabtr
   },
   mounted(){
-   this.tabData = JSON.parse(localStorage.getItem('singleData'))
+   this.tabOldData = JSON.parse(localStorage.getItem('singleData'));
+   //数据总长度
+   this.len = this.tabOldData.length;
+   //切换每页显示几条
+   this.pagesizes=[5,20,50,100];
+   //一页8条
+   this.pagesize = this.pagesizes[0];
+   //起始页
+   this.start = (this.currentPage-1)*this.pagesize;
+   //结束页
+   this.end = this.start+this.pagesize;
+   //通过
+   for(let i =this.start;i<this.end;i++){
+     this.tabOldData?this.tabData.push(this.tabOldData[i]):[];
+   }
   },
   data() {
     return {
       fileList: [
         // {name: 'food.jpeg', url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'}
       ],
+      tabOldData:[],
       tabData:[],
       editData:{},
       oldeditData:{},
-      editImg:''
+      editImg:'',
+      editshow:false,
+      //默认起始页是第一页
+      currentPage:1,
+      //数据总长度
+      len:0,
+      //页数调整
+      pagesizes:[],
+      //每页显示的条数
+      pagesize:0,
+      //起始位置
+      start:0,
+      //结束位置
+      end:0
     }
   },
   methods: {
@@ -108,14 +150,62 @@ export default {
         })
         localStorage.setItem('singleData',JSON.stringify(this.tabData))
         this.editData = {};
+        this.editshow = false;
     },
     cancel(){
       this.editData={};
+      this.editshow = false;
+    },
+    pEditshow(bool){
+      this.editshow = bool;
+    },
+    handleSizeChange(val) {
+      //  console.log(`每页 ${val} 条`);
+       this.pagesize = val;
+       //起始页
+       this.start = (this.currentPage-1)*this.pagesize;
+       //结束页
+       this.end = this.start+this.pagesize;
+     },
+     handleCurrentChange(val) {
+       this.currentPage = val;
+       this.start = (this.currentPage-1)*this.pagesize;
+       //结束页
+       this.end = this.start+this.pagesize;
+      //  console.log(`当前页: ${val}`);
+    }
+  },
+  watch:{
+    currentPage:function(){
+        this.tabData=[];
+        if(this.end>this.len){
+          this.end = this.len;
+        }
+        // console.log(this.start,this.end);
+        //通过
+        for(let i =this.start;i<this.end;i++){
+          this.tabOldData?this.tabData.push(this.tabOldData[i]):[];
+        }
+
+    },
+    pagesize:function(){
+      this.tabData=[];
+      if(this.end>this.len){
+        this.end = this.len;
+      }
+      // console.log(this.start,this.end);
+      //通过
+      for(let i =this.start;i<this.end;i++){
+        this.tabOldData?this.tabData.push(this.tabOldData[i]):[];
+      }
     }
   }
 }
 </script>
 <style  scoped>
+.block{
+  margin:0 50%;
+}
 #tab-cancel a{
   color:#fff;
 }
