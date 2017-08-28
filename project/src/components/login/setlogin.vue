@@ -28,6 +28,12 @@
 <script>
 export default {
   name: "setlogin",
+  mounted() {
+    //do something after mounting vue instance
+    if(localStorage.getItem('userData')){
+      this.userData = JSON.parse(localStorage.getItem('userData'));
+    }
+  },
   data() {
     //密码
     var validatePass = (rule, value, callback) => {

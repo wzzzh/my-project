@@ -47,10 +47,14 @@
           </div>
           <div class="row">
             <div class="col-md-6">
-                <div id="chart1" style="height:350px;background:pink;">图表1</div>
+                <div id="chart1" style="height:350px">
+                  <echart1></echart1>
+                </div>
             </div>
             <div class="col-md-6">
-                <div id="chart2" style="height:350px;background: skyblue;">图表2</div>
+                <div id="chart2" style="height:350px;background: skyblue;">
+                  <echart2></echart2>
+                </div>
             </div>
           </div>
         </div>
@@ -59,11 +63,14 @@
   </div>
 </template>
 <script>
+import echart1 from './echart1';
+import echart2 from './echart2';
 export default {
   name: "homeindex",
-  data: () => ({
-
-  })
+  components: {
+    echart1,
+    echart2
+  }
 }
 </script>
 <style  scoped>

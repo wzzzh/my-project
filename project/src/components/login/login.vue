@@ -62,7 +62,7 @@ export default {
     //do something after mounting vue instance
     let getData = getItem('userData');
     getData.forEach(e=>{
-      console.log(e);
+      this.inituserData.push(e);
     })
   },
   data(){
