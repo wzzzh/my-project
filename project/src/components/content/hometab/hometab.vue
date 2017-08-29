@@ -20,21 +20,19 @@
                 <tbody>
                   <tabtr @tabChildDel="partabDel"  @childTabEdit="parTabEdit"  @childEditshow="pEditshow" v-for="(val,key) in tabData" :pVal="val" ></tabtr>
                 </tbody>
-                <tfoot>
-                  <div class="block">
-                    <!-- <span class="demonstration">完整功能</span> -->
-                    <el-pagination
-                      @size-change="handleSizeChange"
-                      @current-change="handleCurrentChange"
-                      :current-page="currentPage"
-                      :page-sizes="pagesizes"
-                      :page-size="pagesize"
-                      layout="total, sizes, prev, pager, next, jumper"
-                      :total="len">
-                    </el-pagination>
-                  </div>
-                </tfoot>
               </table>
+              <div class="page">
+                <!-- <span class="demonstration">完整功能</span> -->
+                <el-pagination
+                  @size-change="handleSizeChange"
+                  @current-change="handleCurrentChange"
+                  :current-page="currentPage"
+                  :page-sizes="pagesizes"
+                  :page-size="pagesize"
+                  layout="total, sizes, prev, pager, next, jumper"
+                  :total="len">
+                </el-pagination>
+              </div>
           </div>
           <div class="design smart-widget widget-dark-blue" id="edit" v-show="editshow">
             <div class="smart-widget-header"><span class="text m-left-sm"><i class="icon iconfont icon-document"></i>修改内容</span></div>
@@ -203,6 +201,21 @@ export default {
 }
 </script>
 <style  scoped>
+.page{
+  width:100%;
+  height:40px;
+  overflow: hidden;
+  position: relative;
+}
+.el-pagination {
+  white-space: nowrap;
+  padding: 2px 5px;
+  color: #48576a;
+  width: 50%;
+  position: absolute;
+  right: 0;
+  text-align: center;
+}
 .block{
   margin:0 50%;
 }

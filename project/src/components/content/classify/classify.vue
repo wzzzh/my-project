@@ -26,21 +26,19 @@
                   </div></td>
                 </tr>
                 </tbody>
-                <tfoot>
-                  <div class="block">
-                    <!-- <span class="demonstration">完整功能</span> -->
-                    <el-pagination
-                      @size-change="handleSizeChange"
-                      @current-change="handleCurrentChange"
-                      :current-page="currentPage"
-                      :page-sizes="pagesizes"
-                      :page-size="pagesize"
-                      layout="total, sizes, prev, pager, next, jumper"
-                      :total="len">
-                    </el-pagination>
-                  </div>
-                </tfoot>
               </table>
+              <div class="page">
+                <!-- <span class="demonstration">完整功能</span> -->
+                <el-pagination
+                  @size-change="handleSizeChange"
+                  @current-change="handleCurrentChange"
+                  :current-page="currentPage"
+                  :page-sizes="pagesizes"
+                  :page-size="pagesize"
+                  layout="total, sizes, prev, pager, next, jumper"
+                  :total="len">
+                </el-pagination>
+              </div>
           </div>
           <classify-edit
               @childEditdata="pEditdata"
@@ -195,5 +193,20 @@ export default {
 }
 #classify-cancel{
   margin-left:30px;
+}
+.page{
+  width:100%;
+  height:40px;
+  overflow: hidden;
+  position: relative;
+}
+.el-pagination {
+  white-space: nowrap;
+  padding: 2px 5px;
+  color: #48576a;
+  width: 50%;
+  position: absolute;
+  right: 0;
+  text-align: center;
 }
 </style>

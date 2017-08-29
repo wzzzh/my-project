@@ -58,26 +58,26 @@
               </ul>
             </div>
             <!--  table-->
-            <table class="table table-hover ">
+            <table class="table table-hover text-center">
               <thead>
                 <tr>
-                  <th width="10%">ID</th>
-                  <th width="20%">排序</th>
-                  <th >图片</th>
-                  <th >名称</th>
-                  <th >属性</th>
-                  <th >分类名称</th>
-                  <th >更新时间</th>
-                  <th >操作</th>
-                </tr>
+                  <th width="80">ID</th>
+                  <th>排序</th>
+                  <th>图片</th>
+                  <th>名称</th>
+                  <th>属性</th>
+                  <th width="25%">分类名称</th>
+                   <th width="120">更新时间</th>
+                  <th>操作</th>
+                  </tr>
               </thead>
               <tbody>
-                <tr v-for="val in tablist">
+                <tr v-for="(val,key) in tablist">
                   <td>
-                    <input type="checkbox" name="id[]" v-model="val.checked"/>
+                    <input type="checkbox"  v-model="val.checked"/>
                    {{val.id}}
                  </td>
-                  <td><input type="text" name="sort[1]" :value="val.sort" style="width:50px; text-align:center; border:1px solid #ddd; padding:7px 0;" /></td>
+                  <td><input type="text" :value="val.sort" style="width:50px; text-align:center; border:1px solid #ddd; padding:7px 0;" /></td>
                   <td width="10%"><img :src="val.img" alt="" width="70" height="50" /></td>
                   <td>{{val.title}}</td>
                   <td><font color="#00CC99">{{val.attr}}</font></td>
@@ -85,7 +85,7 @@
                   <td>{{val.time}}</td>
                   <td>
                     <div class="button-group">
-                      <a class="button border-edit" href="javascript:;" @click="edit(val)"> 修改</a>
+                      <a class="button border-edit" href="#conedit" @click="edit(val)"> 修改</a>
                       <a class="button border-del" href="javascript:;" @click="del(val)"> 删除</a>
                     </div>
                   </td>
@@ -106,21 +106,18 @@
                   </td>
                 </tr>
               </tbody>
-              <tfoot>
-                <div class="block">
-                  <!-- <span class="demonstration">完整功能</span> -->
-                  <el-pagination
-                    @size-change="handleSizeChange"
-                    @current-change="handleCurrentChange"
-                    :current-page="currentPage"
-                    :page-sizes="pagesizes"
-                    :page-size="pagesize"
-                    layout="total, sizes, prev, pager, next, jumper"
-                    :total="len">
-                  </el-pagination>
-                </div>
-              </tfoot>
             </table>
+            <div class="page">
+              <el-pagination
+                @size-change="handleSizeChange"
+                @current-change="handleCurrentChange"
+                :current-page="currentPage"
+                :page-sizes="pagesizes"
+                :page-size="pagesize"
+                layout="total, sizes, prev, pager, next, jumper"
+                :total="len">
+              </el-pagination>
+            </div>
           </div>
           <!--  修改内容-->
           <conedit
@@ -152,7 +149,7 @@ export default {
           val:e.id
         })
       })
-      this.opt = this.selected[0].txt;
+      // this.opt = this.selected[0].txt;
     }
     if(localStorage.getItem('addData')){
       this.initTablist = JSON.parse(localStorage.getItem('addData'));
@@ -259,8 +256,9 @@ export default {
     },
     selectedTxt:function(){
       this.tablist = this.oldTablist
-      console.log(this.opt);
-      this.tablist = this.tablist.filter(e=>e.classTitle == this.opt)
+      if(this.opt){
+        this.tablist = this.tablist.filter(e=>e.classTitle == this.opt)
+      }
     },
     search(){
       this.tablist=this.tablist.filter(e=>e.title === this.searchVal);
@@ -344,11 +342,23 @@ export default {
 }
 </script>
 <style  scoped>
-/*table thead tr td:first-child{
-  width:10px;
-}*/
-#ap{
-  width:120px;
+.page{
+  width:100%;
+  height:40px;
+  overflow: hidden;
+  position: relative;
+}
+.el-pagination {
+  white-space: nowrap;
+  padding: 2px 5px;
+  color: #48576a;
+  width: 50%;
+  position: absolute;
+  right: 0;
+  text-align: center;
+}
+th{
+  text-align: center
 }
 .searchbtn{
   padding:7px 12px;
