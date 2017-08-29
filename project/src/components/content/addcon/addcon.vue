@@ -77,6 +77,7 @@ export default {
         })
       })
       this.opt = this.selected[0].txt;
+      console.log(this.opt);
     }
     if(localStorage.getItem('addData')){
       this.addData = JSON.parse(localStorage.getItem('addData'));
@@ -125,7 +126,7 @@ export default {
           title:this.initaddData.title,
           img:this.initaddData.img,
           attr:this.initaddData.attr,
-          classTitle:this.selected.txt,
+          classTitle:this.opt,
           desc:this.initaddData.desc,
           keyTitle:this.initaddData.keyTitle,
           sort:this.initaddData.sort,
@@ -133,7 +134,6 @@ export default {
           count:this.initaddData.count,
           checked:this.initaddData.checked
         })
-        console.log(this.opt);
       localStorage.setItem('addData',JSON.stringify(this.addData))
       this.initaddData.title=this.initaddData.desc=this.initaddData.keyTitle=this.initaddData.sort=this.initaddData.time=this.initaddData.count='';
       this.initaddData.attr='首页'

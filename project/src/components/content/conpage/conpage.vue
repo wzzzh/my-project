@@ -58,22 +58,22 @@
               </ul>
             </div>
             <!--  table-->
-            <table class="table table-hover text-center">
+            <table class="table table-hover ">
               <thead>
                 <tr>
-                  <th width="6%" style="text-align:left; padding-left:20px;">ID</th>
-                  <th width="10%">排序</th>
-                  <th>图片</th>
-                  <th width="20%">名称</th>
-                  <th width="6%">属性</th>
-                  <th width="10%">分类名称</th>
-                  <th width="10%">更新时间</th>
-                  <th width="20%">操作</th>
+                  <th width="10%">ID</th>
+                  <th width="20%">排序</th>
+                  <th >图片</th>
+                  <th >名称</th>
+                  <th >属性</th>
+                  <th >分类名称</th>
+                  <th >更新时间</th>
+                  <th >操作</th>
                 </tr>
               </thead>
               <tbody>
                 <tr v-for="val in tablist">
-                  <td style="text-align:left; padding-left:20px;">
+                  <td>
                     <input type="checkbox" name="id[]" v-model="val.checked"/>
                    {{val.id}}
                  </td>
@@ -259,6 +259,7 @@ export default {
     },
     selectedTxt:function(){
       this.tablist = this.oldTablist
+      console.log(this.opt);
       this.tablist = this.tablist.filter(e=>e.classTitle == this.opt)
     },
     search(){
@@ -343,6 +344,12 @@ export default {
 }
 </script>
 <style  scoped>
+/*table thead tr td:first-child{
+  width:10px;
+}*/
+#ap{
+  width:120px;
+}
 .searchbtn{
   padding:7px 12px;
 }
