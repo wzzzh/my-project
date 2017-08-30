@@ -28,12 +28,12 @@
 <script>
 export default {
   name: "setlogin",
-  mounted() {
-    //do something after mounting vue instance
-    if(localStorage.getItem('userData')){
-      this.userData = JSON.parse(localStorage.getItem('userData'));
-    }
-  },
+  // mounted() {
+  //   //do something after mounting vue instance
+  //   if(localStorage.getItem('userData')){
+  //     this.userData = JSON.parse(localStorage.getItem('userData'));
+  //   }
+  // },
   data() {
     //密码
     var validatePass = (rule, value, callback) => {
@@ -80,11 +80,11 @@ export default {
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          this.userData.push({
-            name:this.ruleForm2.name,
-            pass:this.ruleForm2.pass
+          this.$store.state.loginMess.push({
+            userName:this.ruleForm2.name,
+            passWord:this.ruleForm2.pass
           })
-          localStorage.setItem('userData',JSON.stringify(this.userData))
+          // localStorage.setItem('userData',JSON.stringify(this.userData))
           this.$router.push({path:'/'});
         } else {
           console.log('error submit!!');

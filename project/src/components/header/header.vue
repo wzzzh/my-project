@@ -43,11 +43,11 @@
               <a href="javascript:;" id="userToggle" data-toggle="dropdown">
                 <img src="./y.jpg" alt="" class="img-circle inline-block user-profile-pic">
                 <div class="user-detail inline-block" @click="usershow">
-                  大白菜
+                  {{userName}}
                   <i class="icon iconfont icon-unfold"></i>
                 </div>
               </a>
-              <div class="panel border dropdown-menu user-panel" v-show="userMess">
+              <div class="panel border dropdown-menu user-panel" v-show="userStatus">
                 <div class="panel-body paddingTB-sm">
                   <ul>
                     <li>
@@ -61,9 +61,9 @@
                       </a>
                     </li>
                     <li>
-                      <a href="signout.html">
-                        <i class="icon iconfont icon-zhuxiaoguanji"></i><span class="m-left-xs">退出登录</span>
-                      </a>
+                      <router-link to="/">
+                        <i class="icon iconfont icon-zhuxiaoguanji"></i><span class="m-left-xs" @click="loginout">退出登录</span>
+                      </router-link>
                     </li>
                   </ul>
                 </div>
@@ -80,9 +80,19 @@
 import $ from 'jquery'
 export default {
   name:'vheader',
+  mounted() {
+    //do something after mounting vue instance
+    this.userMess = this.$store.state.login;
+
+    // this.userName = this.userMess.userName;
+    this.passWord = this.userMess.password;
+  },
   data: () => ({
     asideshow:false,
-    userMess:false
+    userStatus:false,
+    // userName:'',
+    password:'',
+    userMess:{}
   }),
   methods:{
     asideClick(){
@@ -101,7 +111,16 @@ export default {
       }
     },
     usershow(){
-      this.userMess = !this.userMess
+      this.userStatus = !this.userStatus
+    },
+    loginout(){
+      this.userStatus = false;
+    }
+  },
+  computed:{
+    userName:function(){
+      console.log(this.$store.state.login);
+      return this.$store.state.login.userName;
     }
   }
 }

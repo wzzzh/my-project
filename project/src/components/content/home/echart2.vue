@@ -4,6 +4,7 @@
 <script>
 import echart from 'echarts';
 import $ from 'jquery';
+import {resize} from 'jquery';
 
 export default {
   name: "echart2",
@@ -18,7 +19,10 @@ export default {
   methods: {
     drawLine() {
       // 基于准备好的dom，初始化echarts实例
-      let myChart = echart.init(document.getElementById('echart2'))
+      let myChart = echart.init(document.getElementById('echart2'));
+      window.addEventListener('resize',function(){
+        myChart.resize();
+      })
       // 绘制图表
       myChart.setOption({
         backgroundColor: '#060f4c',

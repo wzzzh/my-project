@@ -10,9 +10,15 @@ import './assets/css/style.css'
 import './assets/css/Icon/iconfont.css'
 import './assets/css/simplify.min.css'
 import $ from 'jquery'
+import mock from './mock/mock.js'
+import axios from 'axios'
+import Vuex from 'vuex'
+import store from './store/store.js'
 
 Vue.config.productionTip = false
+Vue.prototype.$ajax = axios
 Vue.use(ElementUI)
+Vue.use(Vuex)
 Vue.prototype.$goRoute = function (index) {
   this.$router.push(index)
 }
@@ -21,6 +27,7 @@ Vue.prototype.$goRoute = function (index) {
 new Vue({
   el: '#app',
   router,
+  store,
   template: '<App/>',
   components: { App }
 })

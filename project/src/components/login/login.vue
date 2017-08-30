@@ -95,16 +95,23 @@ export default {
     },
     //登录
     login(){
+
       this.userblur();
       this.passblur();
-      this.inituserData.forEach(e=>{
-        if(this.userName != '' && this.userName!= e.name){
-          this.userNotice='*用户名不存在,注  册一下带你飞'
-        }else if(this.userName == e.name){
-          if(this.password == e.pass){
+      let loginMess = this.$store.state.loginMess;
+      loginMess.forEach(e=>{
+        if(this.userName != '' && this.userName!= e.userName){
+          this.userNotice='*用户名不存在,注册一下带你飞'
+        }else if(this.userName == e.userName){
+          if(this.password == e.passWord){
+            this.$store.state.login={
+              userName:this.userName,
+              passWord:this.password
+            }
+            console.log(this.$store.state.login);
             this.state=false;
             this.$router.push({path:'/home'})
-          }else if(this.password!= '' && this.password != e.pass){
+          }else if(this.password!= '' && this.password != e.passWord){
             this.passNotice='*密码不正确'
           }
         }
