@@ -43,7 +43,7 @@
               <a href="javascript:;" id="userToggle" data-toggle="dropdown">
                 <img src="./y.jpg" alt="" class="img-circle inline-block user-profile-pic">
                 <div class="user-detail inline-block" @click="usershow">
-                  {{userName}}
+                  {{pData.userName}}
                   <i class="icon iconfont icon-unfold"></i>
                 </div>
               </a>
@@ -56,8 +56,8 @@
                       </a>
                     </li>
                     <li>
-                      <a href="setting.html">
-                        <i class="icon iconfont icon-shezhi-xianxing"></i><span class="m-left-xs">设置</span>
+                      <a  @click="edit">
+                      <i class="icon iconfont icon-shezhi-xianxing"></i><span class="m-left-xs">设置</span>
                       </a>
                     </li>
                     <li>
@@ -73,27 +73,26 @@
         </div>
       </div><!-- ./top-nav-inner -->
     </header>
+    <useredit @changedit='pchangedit' v-show="editStatus" :puserData = 'pData'></useredit>
   </div>
 </template>
 
 <script>
 import $ from 'jquery'
+import useredit from './edit'
 export default {
   name:'vheader',
-  mounted() {
-    //do something after mounting vue instance
-    this.userMess = this.$store.state.login;
-
-    // this.userName = this.userMess.userName;
-    this.passWord = this.userMess.password;
+  props: ['pData'],
+  components: {
+    useredit
   },
-  data: () => ({
-    asideshow:false,
-    userStatus:false,
-    // userName:'',
-    password:'',
-    userMess:{}
-  }),
+  data(){
+    return{
+      asideshow:false,
+      userStatus:false,
+      editStatus:false,
+    }
+  },
   methods:{
     asideClick(){
       let wraper = $('.wrapper')
@@ -115,14 +114,16 @@ export default {
     },
     loginout(){
       this.userStatus = false;
+    },
+    edit(){
+      this.userStatus = false;
+      this.editStatus = true;
+      this.$router.push({path:'/useredit'});
+    },
+    pchangedit(){
+      this.editStatus = false;
     }
   },
-  computed:{
-    userName:function(){
-      console.log(this.$store.state.login);
-      return this.$store.state.login.userName;
-    }
-  }
 }
 </script>
 

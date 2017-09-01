@@ -6,7 +6,7 @@
           <div class="sign-in-inner">
           <el-form :model="ruleForm2" :rules="rules2" ref="ruleForm2" label-width="100px" class="demo-ruleForm">
             <el-form-item label="用户名" prop="name">
-              <el-input v-model="ruleForm2.name"></el-input>
+              <el-input type="input" v-model="ruleForm2.name" auto-complete="off"></el-input>
             </el-form-item>
             <el-form-item label="密码" prop="pass">
               <el-input type="password" v-model="ruleForm2.pass" auto-complete="off"></el-input>
@@ -28,13 +28,15 @@
 <script>
 export default {
   name: "setlogin",
-  // mounted() {
-  //   //do something after mounting vue instance
-  //   if(localStorage.getItem('userData')){
-  //     this.userData = JSON.parse(localStorage.getItem('userData'));
-  //   }
-  // },
   data() {
+    //用户名
+    var validatename = (rule, value, callback) => {
+      if (value === '') {
+        callback(new Error('请输入用户名'));
+      } else {
+        callback();
+      }
+    };
     //密码
     var validatePass = (rule, value, callback) => {
       if (value === '') {
@@ -46,7 +48,7 @@ export default {
         callback();
       }
     };
-    //密码
+    //确认密码
     var validatePass2 = (rule, value, callback) => {
       if (value === '') {
         callback(new Error('请再次输入密码'));
@@ -65,7 +67,7 @@ export default {
       userData:[],
       rules2: {
         name: [
-          { required: true, message: '请输入用户名', trigger: 'blur'}
+          {required: true,validator: validatename, trigger: 'blur' }
         ],
         pass: [
           {required: true,validator: validatePass, trigger: 'blur' }

@@ -1,42 +1,50 @@
 <template>
-  <div id="editpass">
-    <el-form :model="ruleForm2" :rules="rules2" ref="ruleForm2" label-width="100px" class="demo-ruleForm">
-      <el-form-item label="密码" prop="pass">
-        <el-input type="password" v-model="ruleForm2.pass" auto-complete="off"></el-input>
-      </el-form-item>
-      <el-form-item label="确认密码" prop="checkPass">
-        <el-input type="password" v-model="ruleForm2.checkPass" auto-complete="off"></el-input>
-      </el-form-item>
-      <el-form-item label="年龄" prop="age">
-        <el-input v-model.number="ruleForm2.age"></el-input>
-      </el-form-item>
-      <el-form-item>
-        <el-button type="primary" @click="submitForm('ruleForm2')">提交</el-button>
-        <el-button @click="resetForm('ruleForm2')">重置</el-button>
-      </el-form-item>
-    </el-form>
-  </div>
+  <!-- <div id="edit"> -->
+    <body class="overflow-hidden light-background">
+      <div class="wrapper no-navigation preload">
+        <div class="sign-in-wrapper">
+          <div class="sign-in-inner">
+          <el-form :model="ruleForm2" :rules="rules2" ref="ruleForm2" label-width="100px" class="demo-ruleForm">
+            <el-form-item label="用户名:" >
+              <span class="username" >{{puserData.userName}}</span>
+            </el-form-item>
+            <el-form-item label="当前密码" prop="oldpass">
+              <el-input type="password" v-model="ruleForm2.oldpass" auto-complete="off"></el-input>
+            </el-form-item>
+            <el-form-item label="新密码" prop="newpass">
+              <el-input type="password" v-model="ruleForm2.newpass" auto-complete="off"></el-input>
+            </el-form-item>
+            <el-form-item label="确认密码" prop="checkPass">
+              <el-input type="password" v-model="ruleForm2.checkPass" auto-complete="off"></el-input>
+            </el-form-item>
+            <el-form-item>
+              <el-button type="primary" @click="submitForm('ruleForm2')">提交</el-button>
+              <el-button @click="resetForm('ruleForm2')">返回</el-button>
+            </el-form-item>
+          </el-form>
+        </div><!-- ./sign-in-inner -->
+      </div><!-- ./sign-in-wrapper -->
+    </div><!-- /wrapper -->
+  </body>
+  <!-- </div> -->
 </template>
 <script>
 export default {
-  name: "editpass",
+  name: "edit",
+  props: ['puserData'],
   data() {
-    var checkAge = (rule, value, callback) => {
-      if (!value) {
-        return callback(new Error('年龄不能为空'));
-      }
-      setTimeout(() => {
-        if (!Number.isInteger(value)) {
-          callback(new Error('请输入数字值'));
-        } else {
-          if (value < 18) {
-            callback(new Error('必须年满18岁'));
-          } else {
-            callback();
-          }
+    //原密码
+    var validateoldPass = (rule, value, callback) => {
+      if (value === '') {
+        callback(new Error('请输入当前密码'));
+      }else{
+        if(value !== this.puserData.passWord){
+          callback(new Error('当前密码错误'));
         }
-      }, 1000);
+        callback();
+      }
     };
+    //新密码
     var validatePass = (rule, value, callback) => {
       if (value === '') {
         callback(new Error('请输入密码'));
@@ -47,10 +55,11 @@ export default {
         callback();
       }
     };
+    //确认密码
     var validatePass2 = (rule, value, callback) => {
       if (value === '') {
         callback(new Error('请再次输入密码'));
-      } else if (value !== this.ruleForm2.pass) {
+      } else if (value !== this.ruleForm2.newpass) {
         callback(new Error('两次输入密码不一致!'));
       } else {
         callback();
@@ -58,19 +67,21 @@ export default {
     };
     return {
       ruleForm2: {
-        pass: '',
+        name: '',
+        oldpass:'',
+        newpass: '',
         checkPass: '',
-        age: ''
       },
+      // userData:[],
       rules2: {
-        pass: [
-          { validator: validatePass, trigger: 'blur' }
+        oldpass: [
+          {required: true,validator: validateoldPass, trigger: 'blur' }
+        ],
+        newpass: [
+          {required: true,validator: validatePass, trigger: 'blur' }
         ],
         checkPass: [
-          { validator: validatePass2, trigger: 'blur' }
-        ],
-        age: [
-          { validator: checkAge, trigger: 'blur' }
+          {required: true, validator: validatePass2, trigger: 'blur' }
         ]
       }
     };
@@ -79,7 +90,16 @@ export default {
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          alert('submit!');
+        let data = this.$store.state.loginMess;
+        console.log(data,this.puserData);
+
+
+
+          this.$emit('changedit')
+          this.$router.push({path:'/home'});
+          this.ruleForm2.oldpass = this.ruleForm2.newpass = this.ruleForm2.checkPass = '';
+          //修改密码
+
         } else {
           console.log('error submit!!');
           return false;
@@ -87,10 +107,24 @@ export default {
       });
     },
     resetForm(formName) {
+      this.$emit('changedit')
+      this.$router.push({path:'/home'});
       this.$refs[formName].resetFields();
     }
   }
 }
 </script>
 <style  scoped>
+/*body.light-background{
+  width:100%;
+  height:100%;
+  position:absolute;
+  z-index: 1000000;
+  top:0;
+}*/
+.username{
+  margin-left:10px;
+  color:#333;
+  font-size:16px;
+}
 </style>

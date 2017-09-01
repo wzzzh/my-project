@@ -58,24 +58,13 @@
 import setlogin from './setlogin'
 export default {
   name: "login",
-  mounted() {
-    //do something after mounting vue instance
-    let getData = getItem('userData');
-    getData.forEach(e=>{
-      this.inituserData.push(e);
-    })
-  },
   data(){
     return{
       userNotice:'',
       passNotice:'',
       userName:'',
       password:'',
-      state:true,
-      inituserData:[{
-          name:'admin',
-          pass:'admin'
-        }]
+      state:true
     }
   },
   methods:{
@@ -108,7 +97,7 @@ export default {
               userName:this.userName,
               passWord:this.password
             }
-            console.log(this.$store.state.login);
+            localStorage.setItem('userData',JSON.stringify(this.$store.state.login));
             this.state=false;
             this.$router.push({path:'/home'})
           }else if(this.password!= '' && this.password != e.passWord){

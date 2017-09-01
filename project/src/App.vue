@@ -1,17 +1,7 @@
 <template>
-  <!-- <div id="app">
-    <login @Chomedisable="Phomedisable" v-show="loginshow"></login>
-     <div class="wrapper" v-show="homeshow">
-       <vheader></vheader>
-       <vaside></vaside>
-      <router-view></router-view>
-     </div>
-  </div> -->
-
-
   <div id="app">
      <div class="wrapper">
-       <vheader></vheader>
+       <vheader :pData = "user"></vheader>
        <vaside></vaside>
       <router-view></router-view>
      </div>
@@ -20,32 +10,26 @@
 
 <script>
 
-// import login from './components/login/login'
 import vheader from './components/header/header'
 import vaside from './components/aside/aside'
 export default {
   name: 'app',
   components: {
-    // login,
     vheader,
     vaside
   },
-  // data(){
-  //   return{
-  //     homeshow:false,
-  //     loginshow:true
-  //   }
-  // },
-  // methods: {
-  //   Phomedisable(show,hide) {
-  //     console.log(this.$router);
-  //     // this.$router.push({
-  //     //   path:'/home'
-  //     // });
-  //     this.homeshow=show;
-  //     this.loginshow=hide;
-  //   }
-  // }
+  computed:{
+    user(){
+        let userData=null;
+        if(this.$store.state.login.name){
+          userData = this.$store.state.login.name;
+        }else{
+          userData = JSON.parse(localStorage.getItem('userData'));
+        }
+        // console.log(userData);
+        return userData;
+    }
+  }
 }
 </script>
 

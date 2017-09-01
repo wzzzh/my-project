@@ -12,6 +12,7 @@ import addcon from '@/components/content/addcon/addcon'
 import classify from '@/components/content/classify/classify'
 import addClassify from '@/components/content/classify/addClassify'
 import setlogin from '@/components/login/setlogin'
+// import useredit from '@/components/header/edit'
 
 
 Vue.use(Router)
@@ -73,6 +74,11 @@ export default new Router({
       path:'/setlogin',
       name:'setlogin',
       component:setlogin
-    }
+    },
+    // {
+    //   path:'/useredit',
+    //   name:'useredit',
+    //   component:useredit
+    // }
   ]
 })
