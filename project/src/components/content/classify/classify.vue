@@ -6,7 +6,7 @@
           <div class="design smart-widget widget-dark-blue">
             <div class="smart-widget-header"><span class="text m-left-sm"><i class="icon iconfont icon-createtask"></i></i> 分类列表</span></div>
             <div class="tab_addCon">
-              <button class="btn btn-success" id="add_but" ><router-link to="/addClassify">添加内容</router-link></button>
+              <router-link to="/addClassify"><button class="btn btn-success" id="add_but" >添加内容</button></router-link>
             </div>
             <table class="table table-hover text-center">
                 <thead>
@@ -21,7 +21,7 @@
                     <td>{{val.title}}</td>
                     <td>{{val.sort}}</td>
                     <td><div class="button-group">
-                    <a class="button border-edit" href="javascript:void(0)"  @click="edit(val)">修改</a>
+                    <a class="button border-edit" href="#classifyEidt"  @click="edit(val)">修改</a>
                     <a class="button border-del" href="javascript:void(0)" @click='del(val)' >删除</a>
                   </div></td>
                 </tr>
@@ -64,6 +64,44 @@ export default {
   mounted() {
     if(localStorage.getItem('classifyData')){
       this.classoldTab = JSON.parse(localStorage.getItem('classifyData'));
+    }else{
+      this.classoldTab = [
+        {
+          id:1,
+          title:'箱包',
+          keytitle:'双肩包',
+          keydesc:'各种款式箱包',
+          sort:10
+        },
+        {
+          id:2,
+          title:'单鞋',
+          keytitle:'初秋单鞋',
+          keydesc:'各种款式单鞋',
+          sort:11
+        },
+        {
+          id:3,
+          title:'家居',
+          keytitle:'沙发',
+          keydesc:'各种款式沙发',
+          sort:6
+        },
+        {
+          id:4,
+          title:'食品零售',
+          keytitle:'牛肉、猪肉、鸡肉',
+          keydesc:'各种肉',
+          sort:10
+        },
+        {
+          id:5,
+          title:'个人护理',
+          keytitle:'护肤套装',
+          keydesc:'各种护肤产品',
+          sort:2
+        },
+      ]
     }
     //数据总长度
     this.len = this.classoldTab.length;
@@ -79,9 +117,9 @@ export default {
     for(let i =this.start;i<this.end;i++){
       this.classoldTab?this.classifyTab.push(this.classoldTab[i]):[];
     }
-    console.log(this.start,this.end);
-    console.log(this.classifyTab.length);
-    console.log(this.classifyTab);
+    // console.log(this.start,this.end);
+    // console.log(this.classifyTab.length);
+    // console.log(this.classifyTab);
   },
   data(){
     return{
@@ -108,7 +146,8 @@ export default {
   methods: {
     del(val) {
       this.classifyTab=this.classifyTab.filter(e=>e.id !=val.id)
-      localStorage.setItem('classifyData',JSON.stringify(this.classifyTab))
+      this.classoldTab=this.classoldTab.filter(e=>e.id !=val.id)
+      localStorage.setItem('classifyData',JSON.stringify(this.classoldTab))
     },
     edit(val){
       this.editData = Object.assign(val);
@@ -120,7 +159,7 @@ export default {
           this.classifyTab.splice(i,1,data)
         }
       })
-      // localStorage.setItem('classifyData',JSON.stringify(this.classifyTab))
+      localStorage.setItem('classifyData',JSON.stringify(this.classifyTab))
     },
     pEditshow(bool){
       this.editshow = bool;
@@ -135,6 +174,7 @@ export default {
       //  console.log(this.pagesize,this.currentPage);
      },
      handleCurrentChange(val) {
+       this.len = this.classoldTab.length;
        this.currentPage = val;
        this.start = (this.currentPage-1)*this.pagesize;
        //结束页

@@ -4,25 +4,43 @@
 <script>
 import echart from 'echarts';
 import $ from 'jquery';
-import {resize} from 'jquery';
+import {
+  resize
+} from 'jquery';
 
 export default {
   name: "echart2",
   mounted() {
     this.drawLine();
+    // if(localStorage.getItem('addData')){
+    //   let data = JSON.parse(localStorage.getItem('addData'));
+    //   this.attr.sy = data.filter(e=>e.attr === '首页').length;
+    //   this.attr.zd = data.filter(e=>e.attr === '置顶').length;
+    //   this.sypre = parseFloat(this.attr.sy/(this.attr.sy+this.attr.zd)*100);
+    //   this.zdpre = parseFloat(this.attr.zd/(this.attr.sy+this.attr.zd)*100);
+    // }
   },
   data() {
     return {
-
+      attr:{
+        sy:1100,
+        zd:4200
+      },
+      sypre:20.7,
+      zdpre:79.2
     }
   },
   methods: {
     drawLine() {
       // 基于准备好的dom，初始化echarts实例
       let myChart = echart.init(document.getElementById('echart2'));
-      window.addEventListener('resize',function(){
+      window.addEventListener('resize', function() {
         myChart.resize();
       })
+      let val1 = this.attr.sy;
+      let val2 = this.attr.zd;
+      let valpre1 = this.sypre;
+      let valpre2 = this.zdpre;
       // 绘制图表
       myChart.setOption({
         backgroundColor: '#060f4c',
@@ -68,8 +86,8 @@ export default {
           hoverAnimation: false,
 
           data: [{
-            value: 52.7,
-            name: "男性",
+            value: valpre1,
+            name: "首页",
             itemStyle: {
               normal: {
                 label: {
@@ -96,7 +114,7 @@ export default {
                   color: '#fff',
                   fontSize: 14
                 },
-                formatter: '{b}: 1,120\n\n{a}: {c}%'
+                formatter: '{b}: '+val2+'\n\n{a}: {c}%'
               }
             },
             labelLine: {
@@ -112,8 +130,8 @@ export default {
               }
             }
           }, {
-            value: 47.3,
-            name: "女性",
+            value: valpre2,
+            name: "置顶",
             itemStyle: {
               normal: {
                 label: {
@@ -140,7 +158,7 @@ export default {
                   color: '#fff',
                   fontSize: 14
                 },
-                formatter: '{b}: 1,120\n\n{a}: {c}%'
+                formatter: '{b}: '+val1+'\n\n{a}: {c}%'
               }
             },
             labelLine: {
@@ -171,7 +189,7 @@ export default {
             value: 0,
             label: {
               normal: {
-                formatter: '38',
+                formatter: '40',
                 textStyle: {
                   color: '#fe8b53',
                   fontSize: 25,
@@ -185,7 +203,7 @@ export default {
             },
             label: {
               normal: {
-                formatter: '\n平均年龄',
+                formatter: '\n平均数量',
                 textStyle: {
                   color: '#bbeaf9',
                   fontSize: 14
@@ -195,6 +213,12 @@ export default {
           }]
         }]
       });
+    }
+  },
+  watch:{
+    attr:function(){
+      alert(1)
+      prec()
     }
   }
 }

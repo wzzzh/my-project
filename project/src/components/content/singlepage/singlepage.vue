@@ -44,15 +44,12 @@
 export default {
   name: "singlepage",
   mounted() {
-    if(localStorage.getItem('singleData')){
-      this.singleData = JSON.parse(localStorage.getItem('singleData'));
-    }
+    // localStorage.setItem('singleData',JSON.stringify(this.singleData));
+    this.singleData = JSON.parse(localStorage.getItem('singleData'));
   },
   data() {
     return {
-      fileList: [
-        // {name: 'food.jpeg', url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'}
-      ],
+      fileList: [],
       initsingleData:{
         title:'',
         url:'',
@@ -60,7 +57,43 @@ export default {
         desc:'',
         sort:''
       },
-      singleData:[],
+      singleData:[
+        {
+          id:1,
+          img:'http://s10.mogucdn.com/mlcdn/c45406/170901_7kgfle362g65db0f24jbk8gf6cjfi_778x440.jpg_900x9999.v1c7E.70.webp',
+          title:'周末大放价，U质团',
+          desc:'9.9元秒杀，周末大放送',
+          sort:10
+        },
+        {
+          id:2,
+          img:'http://s10.mogucdn.com/mlcdn/c45406/170831_479g0ifl6f2i313feb5ech46kek21_778x440.jpg_900x9999.v1c7E.70.webp',
+          title:'开学焕新',
+          desc:'精选专题，newshow',
+          sort:5
+        },
+        {
+          id:3,
+          img:'http://s10.mogucdn.com/mlcdn/c45406/170901_5if63ia64j4geeh60c4cb7e3cgej7_778x440.jpg_900x9999.v1c7E.70.webp',
+          title:'不buy不痛快',
+          desc:'7折抢购，尚秀周',
+          sort:10
+        },
+        {
+          id:4,
+          img:'http://s10.mogucdn.com/mlcdn/c45406/170804_32200he12l9celh2gc0ef10k1hcfe_778x440.jpg_900x9999.v1c7E.70.webp',
+          title:'好评聚集地',
+          desc:'人气口碑馆，享你所想',
+          sort:2
+        },
+        {
+          id:5,
+          img:'http://s10.mogucdn.com/mlcdn/c45406/170831_0g67146llaiia09aj98f8c4dhe1gj_1920x316.jpg_999x999.v1c0.70.webp',
+          title:'每日穿搭',
+          desc:'每日教你穿搭让你变更美',
+          sort:18
+        },
+      ],
     }
   },
   methods: {
@@ -72,7 +105,7 @@ export default {
     //提交
     submit(){
       let max = maxId(this.singleData)
-      this.singleData.push({
+      this.singleData.unshift({
         id:++max,
         title:this.initsingleData.title,
         url:this.initsingleData.url,
@@ -80,7 +113,6 @@ export default {
         desc:this.initsingleData.desc,
         sort:this.initsingleData.sort
       })
-      // console.log(JSON.parse(localStorage.getItem('singleData')));
       localStorage.setItem('singleData',JSON.stringify(this.singleData))
       this.initsingleData.title=this.initsingleData.url=this.initsingleData.img=this.initsingleData.desc=this.initsingleData.sort='';
     },

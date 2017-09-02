@@ -12,7 +12,7 @@
               <input
                 type="text"
                 class="form-control user"
-                placeholder="请输入管理员名称"
+                placeholder="admin"
                 v-model="userName"
                 @blur="userblur"
               >
@@ -23,7 +23,7 @@
                 type="password"
                 class="form-control
                 password"
-                placeholder="请输入密码"
+                placeholder="admin"
                 v-model="password"
                 @blur="passblur"
               >
@@ -84,28 +84,31 @@ export default {
     },
     //登录
     login(){
-
       this.userblur();
       this.passblur();
       let loginMess = this.$store.state.loginMess;
       loginMess.forEach(e=>{
-        if(this.userName != '' && this.userName!= e.userName){
-          this.userNotice='*用户名不存在,注册一下带你飞'
-        }else if(this.userName == e.userName){
-          if(this.password == e.passWord){
-            this.$store.state.login={
-              userName:this.userName,
-              passWord:this.password
+        // console.log(this.userName,e.userName);
+        if(this.userName != '' && !(e.userName.includes(this.userName))){
+          this.userNotice='*用户名不存在...注册一下带你飞'
+        }else {
+          this.userNotice = ''
+          if(this.userName == e.userName){
+            if(this.password == e.passWord){
+              this.$store.state.login={
+                userName:this.userName,
+                passWord:this.password
+              }
+              localStorage.setItem('userData',JSON.stringify(this.$store.state.login));
+              this.state=false;
+              this.$router.push({path:'/home'})
             }
-            localStorage.setItem('userData',JSON.stringify(this.$store.state.login));
-            this.state=false;
-            this.$router.push({path:'/home'})
-          }else if(this.password!= '' && this.password != e.passWord){
-            this.passNotice='*密码不正确'
+            if(this.password!= '' && this.password != e.passWord){
+              this.passNotice='*密码不正确'
+            }
           }
         }
       })
-
     },
     setlogin(){
       this.$router.push({path:'/setlogin'})

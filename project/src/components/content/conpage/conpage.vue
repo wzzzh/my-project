@@ -64,9 +64,9 @@
                   <th width="80">ID</th>
                   <th>排序</th>
                   <th>图片</th>
-                  <th>名称</th>
+                  <th width="25%">名称</th>
                   <th>属性</th>
-                  <th width="25%">分类名称</th>
+                  <th>分类名称</th>
                    <th width="120">更新时间</th>
                   <th>操作</th>
                   </tr>
@@ -153,6 +153,74 @@ export default {
     }
     if(localStorage.getItem('addData')){
       this.initTablist = JSON.parse(localStorage.getItem('addData'));
+    }else{
+      this.initTablist = [
+        {
+          id:1,
+          title:'夏上新韩版气质时尚POLO领格子衬衫高腰显瘦九分阔腿裤套装女',
+          img:'http://s3.mogucdn.com/mlcdn/c45406/170803_8aba64didf76gb2b2186hg37be4f5_640x960.jpg_468x468.jpg',
+          attr:'首页',
+          classTitle:'服饰',
+          desc:'每一个面料 每一个细节，好品质会让第二层肌肤更出色，关注店铺更多惊喜等着您',
+          keyTitle:'衣裤套装，长袖，韩系',
+          sort:11,
+          time:'2017-7-3',
+          count:15,
+          checked:false
+        },
+        {
+          id:2,
+          title:'2017新款春夏韩版简约时尚潮宽带撞色单肩女包包彩带斜挎包包',
+          img:'http://s3.mogucdn.com/mlcdn/c45406/170807_1f1i3hajaajieig66546i268k0e7c_640x960.jpg_468x468.jpg',
+          attr:'置顶',
+          classTitle:'箱包',
+          desc:'收藏店铺送三元无门槛优惠券（点击左下角小店进入店铺首页即可看到收藏按钮）满99减10元，粉丝优惠多多，先收藏后购物更划算~~',
+          keyTitle:'休闲/街头，水桶形',
+          sort:44,
+          time:'2017-5-6',
+          count:222,
+          checked:false
+        },
+        {
+          id:3,
+          title:'御泥坊玫瑰滋养水乳两件套化妆品套装护肤品女正品补水保湿水润',
+          img:'http://s3.mogucdn.com/p2/161203/84736276_5956b0aggced17j01792b197i45bf_640x960.jpg_468x468.jpg',
+          attr:'推荐',
+          classTitle:'个人护理',
+          desc:'玫瑰补充肌肤水分，深度补水；抚平干燥粗糙，持久保湿；2步养成水润嫩滑肌',
+          keyTitle:'补水保湿,滋润,保湿,补水',
+          sort:10,
+          time:'2017-2-6',
+          count:34444,
+          checked:false
+        },
+        {
+          id:4,
+          title:'稻香村月饼散装迷你饼600g',
+          img:'http://s3.mogucdn.com/mlcdn/c45406/170830_4hdcack5845a4dcek98ckb3k24lc9_800x800.jpg_468x468.jpg',
+          attr:'首页',
+          classTitle:'食品零售',
+          desc:'稻香村始创于清乾隆三十八年（公元1773年），是国内食品行业历史久、影响力大的知名品牌之一',
+          keyTitle:'稻香村，散装',
+          sort:13,
+          time:'2017-9-2',
+          count:2333444,
+          checked:false
+        },
+        {
+          id:5,
+          title:'家旺达简易衣柜简约现代塑料组装折叠衣橱组合儿童衣柜衣服收纳柜',
+          img:'http://s3.mogucdn.com/p2/160822/155173105_01ed3603gaejkb4d55abje193b4ee_649x974.jpg_468x468.jpg',
+          attr:'置顶',
+          classTitle:'家居',
+          desc:'防尘防水防霉',
+          keyTitle:'深9门3格2挂粉',
+          sort:10,
+          time:'2015-2-6',
+          count:44466,
+          checked:false
+        },
+      ]
     }
     //数据总长度
     this.len = this.initTablist.length;
@@ -204,12 +272,14 @@ export default {
     //单个删除
     del(val){
       this.tablist=this.tablist.filter(e=>e.id !=val.id)
-      // localStorage.setItem('addData',JSON.stringify(this.tablist))
+      this.initTablist=this.initTablist.filter(e=>e.id !=val.id)
+      localStorage.setItem('addData',JSON.stringify(this.initTablist))
     },
     //批量删除
     delAll(){
       this.tablist = this.tablist.filter(e=> !e.checked)
-      // localStorage.setItem('addData',JSON.stringify(this.tablist))
+      this.initTablist = this.initTablist.filter(e=> !e.checked)
+      localStorage.setItem('addData',JSON.stringify(this.initTablist))
     },
     //排序
     sortData(){
@@ -264,7 +334,7 @@ export default {
       this.tablist=this.tablist.filter(e=>e.title === this.searchVal);
     },
     dataAll(){
-      this.tablist = this.oldTablist;
+      this.tablist = JSON.parse(localStorage.getItem('addData'));
     },
     edit(val){
       this.editshow = true
@@ -274,7 +344,7 @@ export default {
       this.editshow =bool;
     },
     pEditdata(data){
-      console.log(this.tablist);
+      // console.log(this.tablist);
       this.tablist.forEach((e,i)=>{
         if(e.id==data.id){
           this.tablist.splice(i,1,data)
@@ -282,14 +352,19 @@ export default {
       })
       this.oldTablist.forEach((e,i)=>{
         if(e.id==this.tablist.id){
-          alert(1)
-          this.oldTablist.splice(i,1,this.tablist)
+          this.oldTablist.splice(i,1,data)
         }
       })
-      localStorage.setItem('addData',JSON.stringify(this.oldTablist))
+      this.initTablist.forEach((e,i)=>{
+        if(e.id==this.tablist.id){
+          this.initTablist.splice(i,1,oldTablist)
+        }
+      })
+      localStorage.setItem('addData',JSON.stringify(this.tablist))
     },
     handleSizeChange(val) {
       //  console.log(`每页 ${val} 条`);
+        this.len = this.initTablist.length;
        this.pagesize = val;
        //起始页
        this.start = (this.currentPage-1)*this.pagesize;
@@ -297,6 +372,7 @@ export default {
        this.end = this.start+this.pagesize;
      },
      handleCurrentChange(val) {
+       this.len = this.initTablist.length;
        this.currentPage = val;
        this.start = (this.currentPage-1)*this.pagesize;
        //结束页

@@ -49,7 +49,8 @@
             </div>
             <div class="form-group has-success clearfix">
               <label class="control-label" >提交时间：</label>
-              <input type="text" class="form-control" aria-describedby="helpBlock2" v-model="initaddData.time">{{initaddData.time}}
+              <!-- <input type="text" class="form-control" aria-describedby="helpBlock2" v-model="initaddData.time"> -->
+              <span>{{initaddData.time}}</span>
             </div>
             <div class="form-group has-success clearfix">
               <label class="control-label" for="inputSuccess6">点击次数：</label>
@@ -68,6 +69,7 @@ import $ from 'jquery';
 export default {
   name: "addcon",
   mounted() {
+    // localStorage.setItem('addData',JSON.stringify(this.addData))
     if(localStorage.getItem('classifyData')){
       let arr = JSON.parse(localStorage.getItem('classifyData'));
       arr.forEach((e,i)=>{
@@ -79,9 +81,7 @@ export default {
       this.opt = this.selected[0].txt;
       console.log(this.opt);
     }
-    if(localStorage.getItem('addData')){
-      this.addData = JSON.parse(localStorage.getItem('addData'));
-    }
+    this.addData = JSON.parse(localStorage.getItem('addData'));
   },
   data() {
     return {
@@ -98,9 +98,74 @@ export default {
         count:'',
         checked:false
       },
-      addData:[],
+      addData:[
+        {
+          id:1,
+          title:'夏上新韩版气质时尚POLO领格子衬衫高腰显瘦九分阔腿裤套装女',
+          img:'http://s3.mogucdn.com/mlcdn/c45406/170803_8aba64didf76gb2b2186hg37be4f5_640x960.jpg_468x468.jpg',
+          attr:'首页',
+          classTitle:'服饰',
+          desc:'每一个面料 每一个细节，好品质会让第二层肌肤更出色，关注店铺更多惊喜等着您',
+          keyTitle:'衣裤套装，长袖，韩系',
+          sort:11,
+          time:'2017-7-3',
+          count:15,
+          checked:false
+        },
+        {
+          id:2,
+          title:'2017新款春夏韩版简约时尚潮宽带撞色单肩女包包彩带斜挎包包',
+          img:'http://s3.mogucdn.com/mlcdn/c45406/170807_1f1i3hajaajieig66546i268k0e7c_640x960.jpg_468x468.jpg',
+          attr:'置顶',
+          classTitle:'箱包',
+          desc:'收藏店铺送三元无门槛优惠券（点击左下角小店进入店铺首页即可看到收藏按钮）满99减10元，粉丝优惠多多，先收藏后购物更划算~~',
+          keyTitle:'休闲/街头，水桶形',
+          sort:44,
+          time:'2017-5-6',
+          count:222,
+          checked:false
+        },
+        {
+          id:3,
+          title:'御泥坊玫瑰滋养水乳两件套化妆品套装护肤品女正品补水保湿水润',
+          img:'http://s3.mogucdn.com/p2/161203/84736276_5956b0aggced17j01792b197i45bf_640x960.jpg_468x468.jpg',
+          attr:'推荐',
+          classTitle:'个人护理',
+          desc:'玫瑰补充肌肤水分，深度补水；抚平干燥粗糙，持久保湿；2步养成水润嫩滑肌',
+          keyTitle:'补水保湿,滋润,保湿,补水',
+          sort:10,
+          time:'2017-2-6',
+          count:34444,
+          checked:false
+        },
+        {
+          id:4,
+          title:'稻香村月饼散装迷你饼600g',
+          img:'http://s3.mogucdn.com/mlcdn/c45406/170830_4hdcack5845a4dcek98ckb3k24lc9_800x800.jpg_468x468.jpg',
+          attr:'首页',
+          classTitle:'食品零售',
+          desc:'稻香村始创于清乾隆三十八年（公元1773年），是国内食品行业历史久、影响力大的知名品牌之一',
+          keyTitle:'稻香村，散装',
+          sort:13,
+          time:'2017-9-2',
+          count:2333444,
+          checked:false
+        },
+        {
+          id:5,
+          title:'家旺达简易衣柜简约现代塑料组装折叠衣橱组合儿童衣柜衣服收纳柜',
+          img:'http://s3.mogucdn.com/p2/160822/155173105_01ed3603gaejkb4d55abje193b4ee_649x974.jpg_468x468.jpg',
+          attr:'置顶',
+          classTitle:'家居',
+          desc:'防尘防水防霉',
+          keyTitle:'深9门3格2挂粉',
+          sort:10,
+          time:'2015-2-6',
+          count:44466,
+          checked:false
+        },
+      ],
       selected:[],
-      // options:[],
       opt:''
     }
   },
@@ -121,7 +186,7 @@ export default {
       let max = maxId(this.addData)
       let time = new Date();
       time = time.getFullYear()+'-'+(time.getMonth()+1)+'-'+time.getDate();
-        this.addData.push({
+        this.addData.unshift({
           id:++max,
           title:this.initaddData.title,
           img:this.initaddData.img,

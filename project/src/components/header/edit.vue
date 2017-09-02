@@ -90,16 +90,19 @@ export default {
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-        let data = this.$store.state.loginMess;
-        console.log(data,this.puserData);
-
-
-
+          //修改密码
+          let {userName,passWord}=this.puserData;
+           console.log(this.$store.state.loginMess,userName,passWord);
+          this.$store.state.loginMess.forEach(e=>{
+            if(e.userName == userName){
+              if(e.passWord == passWord){
+                e.passWord = this.ruleForm2.newpass
+              }
+            }
+          })
           this.$emit('changedit')
           this.$router.push({path:'/home'});
           this.ruleForm2.oldpass = this.ruleForm2.newpass = this.ruleForm2.checkPass = '';
-          //修改密码
-
         } else {
           console.log('error submit!!');
           return false;

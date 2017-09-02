@@ -33,9 +33,8 @@
 export default {
   name: "addClassify",
   mounted() {
-    if(localStorage.getItem('classifyData')){
+      // localStorage.setItem('classifyData',JSON.stringify(this.classifyData))
       this.classifyData = JSON.parse(localStorage.getItem('classifyData'));
-    }
   },
   data(){
     return{
@@ -45,7 +44,43 @@ export default {
         keydesc:'',
         sort:'',
       },
-      classifyData:[]
+      classifyData:[
+        {
+          id:1,
+          title:'箱包',
+          keytitle:'双肩包',
+          keydesc:'各种款式箱包',
+          sort:10
+        },
+        {
+          id:2,
+          title:'单鞋',
+          keytitle:'初秋单鞋',
+          keydesc:'各种款式单鞋',
+          sort:11
+        },
+        {
+          id:3,
+          title:'家居',
+          keytitle:'沙发',
+          keydesc:'各种款式沙发',
+          sort:6
+        },
+        {
+          id:4,
+          title:'食品零售',
+          keytitle:'牛肉、猪肉、鸡肉',
+          keydesc:'各种肉',
+          sort:10
+        },
+        {
+          id:5,
+          title:'个人护理',
+          keytitle:'护肤套装',
+          keydesc:'各种护肤产品',
+          sort:2
+        },
+      ]
     }
   },
   methods: {

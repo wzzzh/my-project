@@ -34,6 +34,12 @@ export default {
       if (value === '') {
         callback(new Error('请输入用户名'));
       } else {
+        let data = this.$store.state.loginMess;
+        data.forEach(e=>{
+          if(e.userName.includes(value)){
+            callback(new Error('此用户名已被占用，请重新输入'));
+          }
+        })
         callback();
       }
     };
@@ -86,7 +92,6 @@ export default {
             userName:this.ruleForm2.name,
             passWord:this.ruleForm2.pass
           })
-          // localStorage.setItem('userData',JSON.stringify(this.userData))
           this.$router.push({path:'/'});
         } else {
           console.log('error submit!!');
