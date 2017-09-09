@@ -4,46 +4,54 @@
       <div class="padding-md">
         <div class="main">
           <div class="row m-top-md">
-            <div class="col-lg-3 col-sm-6">
-              <div class="statistic-box bg-danger m-bottom-md">
-                <div class="statistic-title">内容分类</div>
-                <div class="statistic-value">{{classify.con}}</div>
-                <div class="m-top-md">比上周增加{{classify.per}}%</div>
-                <div class="statistic-icon-background">
-                  <i class="ion-eye"></i>
+            <router-link to="/classify">
+              <div class="col-lg-3 col-sm-6" >
+                <div class="statistic-box bg-danger m-bottom-md">
+                  <div class="statistic-title">内容分类</div>
+                  <div class="statistic-value">{{classify.con}}</div>
+                  <div class="m-top-md">比上周增加{{classify.per}}%</div>
+                  <div class="statistic-icon-background">
+                    <i class="ion-eye"></i>
+                  </div>
                 </div>
               </div>
-            </div>
-            <div class="col-lg-3 col-sm-6">
-              <div class="statistic-box bg-info m-bottom-md">
-                <div class="statistic-title">留言条目</div>
-                <div class="statistic-value">{{brog.con}}</div>
-                <div class="m-top-md">比上周增加{{brog.per}}%</div>
-                <div class="statistic-icon-background">
-                  <i class="ion-ios7-cart-outline"></i>
+            </router-link>
+            <router-link to="/brog">
+              <div class="col-lg-3 col-sm-6">
+                <div class="statistic-box bg-info m-bottom-md">
+                  <div class="statistic-title">留言条目</div>
+                  <div class="statistic-value">{{brog.con}}</div>
+                  <div class="m-top-md">比上周增加{{brog.per}}%</div>
+                  <div class="statistic-icon-background">
+                    <i class="ion-ios7-cart-outline"></i>
+                  </div>
                 </div>
               </div>
-            </div>
-            <div class="col-lg-3 col-sm-6">
-              <div class="statistic-box bg-purple m-bottom-md">
-                <div class="statistic-title">首页条目</div>
-                <div class="statistic-value">{{sy.con}}</div>
-                <div class="m-top-md">比上周增加{{sy.per}}%</div>
-                <div class="statistic-icon-background">
-                  <i class="ion-person-add"></i>
+            </router-link>
+            <router-link to="/hometab">
+              <div class="col-lg-3 col-sm-6">
+                <div class="statistic-box bg-purple m-bottom-md">
+                  <div class="statistic-title">首页条目</div>
+                  <div class="statistic-value">{{sy.con}}</div>
+                  <div class="m-top-md">比上周增加{{sy.per}}%</div>
+                  <div class="statistic-icon-background">
+                    <i class="ion-person-add"></i>
+                  </div>
                 </div>
               </div>
-            </div>
-            <div class="col-lg-3 col-sm-6">
-              <div class="statistic-box bg-success m-bottom-md">
-                <div class="statistic-title">网站总量</div>
-                <div class="statistic-value">{{webtotal.con}}</div>
-                <div class="m-top-md">比上周增加{{webtotal.per}}%</div>
-                <div class="statistic-icon-background">
-                  <i class="ion-stats-bars"></i>
+            </router-link>
+            <router-link to="/webpage">
+              <div class="col-lg-3 col-sm-6">
+                <div class="statistic-box bg-success m-bottom-md">
+                  <div class="statistic-title">网站总量</div>
+                  <div class="statistic-value">{{webtotal.con}}</div>
+                  <div class="m-top-md">比上周增加{{webtotal.per}}%</div>
+                  <div class="statistic-icon-background">
+                    <i class="ion-stats-bars"></i>
+                  </div>
                 </div>
               </div>
-            </div>
+            </router-link>
           </div>
           <div class="row">
             <div class="col-md-6">
@@ -112,4 +120,7 @@ export default {
 }
 </script>
 <style  scoped>
+.col-lg-3,.col-sm-6{
+  cursor: pointer;
+}
 </style>

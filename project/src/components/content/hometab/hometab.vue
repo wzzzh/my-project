@@ -195,6 +195,7 @@ export default {
     },
     pEditshow(bool){
       this.editshow = bool;
+      console.log(this.editshow);
     },
     handleSizeChange(val) {
       //  console.log(`每页 ${val} 条`);

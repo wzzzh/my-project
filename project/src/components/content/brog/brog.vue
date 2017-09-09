@@ -125,6 +125,12 @@ export default {
   computed:{
     brogData2:function(){
       var data = [...this.brogData];
+      if(data){
+        data.forEach(e=>{
+          let newTel = e.tel.toString().split('.').join('');
+          e.tel = newTel;
+        })
+      }
       var newData=[];
       this.len = data.length;
       //起始页

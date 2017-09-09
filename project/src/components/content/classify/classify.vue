@@ -21,7 +21,7 @@
                     <td>{{val.title}}</td>
                     <td>{{val.sort}}</td>
                     <td><div class="button-group">
-                    <a class="button border-edit" href="#classifyEidt"  @click="edit(val)">修改</a>
+                    <a class="button border-edit" href="javascript:void(0)"  @click="edit('#classifyEidt',val)">修改</a>
                     <a class="button border-del" href="javascript:void(0)" @click='del(val)' >删除</a>
                   </div></td>
                 </tr>
@@ -54,7 +54,7 @@
 <script>
 import addClassify from './addClassify'
 import classifyEdit from './classifyEdit'
-// import bootpage from '../../content/bootpage/bootpage'
+import $ from 'jquery'
 export default {
   name: "classify",
   components:{
@@ -149,9 +149,13 @@ export default {
       this.classoldTab=this.classoldTab.filter(e=>e.id !=val.id)
       localStorage.setItem('classifyData',JSON.stringify(this.classoldTab))
     },
-    edit(val){
+    edit(selector,val){
       this.editData = Object.assign(val);
       this.editshow = true;
+      setTimeout(()=>{
+        let anchor = $(selector)[0].offsetTop;
+        document.body.scrollTop = anchor;
+      },10)
     },
     pEditdata(data){
       this.classifyTab.forEach((e,i)=>{

@@ -2,7 +2,6 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import login from '@/components/login/login'
 import home from '@/components/content/home/home'
-import mainbox from '@/components/content/mainbox/mainbox'
 import webpage from '@/components/content/webpage/webpage'
 import singlepage from '@/components/content/singlepage/singlepage'
 import hometab from '@/components/content/hometab/hometab'
@@ -18,7 +17,7 @@ import setlogin from '@/components/login/setlogin'
 Vue.use(Router)
 
 export default new Router({
-  mode:'history',
+  // mode:'history',
   routes: [
     {
       path:'/',

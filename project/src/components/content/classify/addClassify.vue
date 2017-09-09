@@ -33,7 +33,7 @@
 export default {
   name: "addClassify",
   mounted() {
-      // localStorage.setItem('classifyData',JSON.stringify(this.classifyData))
+      localStorage.setItem('classifyData',JSON.stringify(this.classifyData))
       this.classifyData = JSON.parse(localStorage.getItem('classifyData'));
   },
   data(){
@@ -85,6 +85,7 @@ export default {
   },
   methods: {
     submit() {
+      console.log(this.classifyData);
       let max = maxId(this.classifyData)
       this.classifyData.unshift({
         id:++max,

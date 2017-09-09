@@ -85,7 +85,7 @@
                   <td>{{val.time}}</td>
                   <td>
                     <div class="button-group">
-                      <a class="button border-edit" href="#conedit" @click="edit(val)"> 修改</a>
+                      <a class="button border-edit" href="javascript:void(0)" @click="edit(val,'#conedit')"> 修改</a>
                       <a class="button border-del" href="javascript:;" @click="del(val)"> 删除</a>
                     </div>
                   </td>
@@ -135,6 +135,7 @@
 </template>
 <script>
 import conedit from './conedit'
+import $ from 'jquery'
 export default {
   name: "conpage",
   components: {
@@ -143,6 +144,7 @@ export default {
   mounted() {
     if(localStorage.getItem('classifyData')){
       let arr = JSON.parse(localStorage.getItem('classifyData'));
+      console.log(arr);
       arr.forEach((e,i)=>{
         this.selected.push({
           txt:e.title,
@@ -336,9 +338,13 @@ export default {
     dataAll(){
       this.tablist = JSON.parse(localStorage.getItem('addData'));
     },
-    edit(val){
+    edit(val,selector){
       this.editshow = true
       this.editData = Object.assign(val);
+      setTimeout(()=>{
+        let anchor = $(selector)[0].offsetTop;
+        document.body.scrollTop = anchor;
+      },10)
     },
     pchangeShow(bool){
       this.editshow =bool;

@@ -8,7 +8,7 @@
       <td>{{pVal.sort}}</td>
       <td>
         <div class="button-group">
-          <a class="button border-edit" href="#edit" @click="edit(pVal,$event)">修改</a>
+          <a class="button border-edit" href="javascript:void(0)" @click="edit(pVal,$event,'#edit')">修改</a>
           <a class="button border-del" @click="del(pVal,$event)">删除</a>
         </div>
       </td>
@@ -18,6 +18,7 @@
 </template>
 <script>
 import { MessageBox } from 'element-ui';
+import $ from 'jquery';
 export default {
   name: "homeTable",
   props:['pVal',],
@@ -28,12 +29,16 @@ export default {
   },
   methods:{
     del(pVal,ev){
-      console.log(pVal)
+      // console.log(pVal)
       this.$emit('tabChildDel',pVal.id)
     },
-    edit(pVal,ev){
-      this.$emit('childTabEdit',pVal)
+    edit(pVal,ev,selector){
+      this.$emit('childTabEdit',pVal);
       this.$emit('childEditshow',true)
+      setTimeout(()=>{
+        let anchor = $(selector)[0].offsetTop;
+        document.body.scrollTop = anchor;
+      },10)
     }
   }
 }

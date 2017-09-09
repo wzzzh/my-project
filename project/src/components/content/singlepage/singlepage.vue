@@ -44,7 +44,7 @@
 export default {
   name: "singlepage",
   mounted() {
-    // localStorage.setItem('singleData',JSON.stringify(this.singleData));
+    localStorage.setItem('singleData',JSON.stringify(this.singleData));
     this.singleData = JSON.parse(localStorage.getItem('singleData'));
   },
   data() {

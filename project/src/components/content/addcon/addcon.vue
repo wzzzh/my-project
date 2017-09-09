@@ -69,7 +69,7 @@ import $ from 'jquery';
 export default {
   name: "addcon",
   mounted() {
-    // localStorage.setItem('addData',JSON.stringify(this.addData))
+    localStorage.setItem('addData',JSON.stringify(this.addData))
     if(localStorage.getItem('classifyData')){
       let arr = JSON.parse(localStorage.getItem('classifyData'));
       arr.forEach((e,i)=>{

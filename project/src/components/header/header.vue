@@ -164,7 +164,6 @@ export default {
       this.searchCon = '';
     },
     pchangstatus(){
-      alert(1)
       this.searchstatus = false;
       this.searchCon = '';
     }
