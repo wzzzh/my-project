@@ -142,17 +142,6 @@ export default {
     conedit
   },
   mounted() {
-    if(localStorage.getItem('classifyData')){
-      let arr = JSON.parse(localStorage.getItem('classifyData'));
-      console.log(arr);
-      arr.forEach((e,i)=>{
-        this.selected.push({
-          txt:e.title,
-          val:e.id
-        })
-      })
-      // this.opt = this.selected[0].txt;
-    }
     if(localStorage.getItem('addData')){
       this.initTablist = JSON.parse(localStorage.getItem('addData'));
     }else{
@@ -223,6 +212,23 @@ export default {
           checked:false
         },
       ]
+    }
+    if(localStorage.getItem('classifyData')){
+      let arr = JSON.parse(localStorage.getItem('classifyData'));
+      arr.forEach((e,i)=>{
+        this.selected.push({
+          txt:e.title,
+          val:e.id
+        })
+      })
+      // this.opt = this.selected[0].txt;
+    }else{
+      this.initTablist.forEach(e=>{
+        this.selected.push({
+          txt:e.classTitle,
+          val:e.id
+        })
+      })
     }
     //数据总长度
     this.len = this.initTablist.length;
